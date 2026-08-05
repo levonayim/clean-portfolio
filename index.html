@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page - Levona Yim</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #FAFAFA;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body.is-snapping {
+      overflow: hidden;
+    }
+
+    /* --- NAVIGATION --- */
+    nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      background: #ffffff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      z-index: 100;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500; /* Standard link thickness */
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.2s ease, font-weight 0.2s ease;
+    }
+
+    /* ACTIVE PAGE LINK STYLE */
+    nav a.active {
+      color: #15521F;      /* Matches brand green */
+      font-weight: 700;    /* Slightly thicker font weight */
+    }
+
+    /* --- HERO SECTION --- */
+    .hero-section {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative; /* Anchor point for absolute children */
+    }
+
+    /* --- INTERACTIVE CANVAS --- */
+    #leaf-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-container {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* --- CENTERED HERO TITLE & TYPING CURSOR --- */
+    .interactive-title {
+      position: relative;
+      display: inline-block;
+      font-size: 5rem;
+      font-weight: 900;
+      color: #15521F;
+      cursor: pointer;
+      user-select: none;
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+      margin: 0 auto;
+      text-align: center;
+      width: fit-content;
+    }
+
+    .main-text {
+      position: relative;
+      z-index: 10;
+      display: inline-flex;
+      transform: translateZ(0px);
+    }
+
+    .char {
+      display: inline-block;
+      white-space: pre;
+      transition: transform 0.15s cubic-bezier(0.1, 1, 0.1, 1);
+    }
+
+    .layer-3d {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: transparent;
+      -webkit-text-stroke: 1.5px #15521F;
+      pointer-events: none;
+      transition: transform 0.1s ease-out;
+    }
+
+    .l-1 { transform: translate3d(calc(var(--mx, 0) * -8px), calc(var(--my, 0) * -8px), -12px); opacity: 0.8; }
+    .l-2 { transform: translate3d(calc(var(--mx, 0) * -16px), calc(var(--my, 0) * -16px), -24px); opacity: 0.6; }
+    .l-3 { transform: translate3d(calc(var(--mx, 0) * -24px), calc(var(--my, 0) * -24px), -36px); opacity: 0.4; }
+    .l-4 { transform: translate3d(calc(var(--mx, 0) * -32px), calc(var(--my, 0) * -32px), -48px); opacity: 0.2; }
+
+    .interactive-title.is-typing {
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 4px solid #15521F;
+      margin: 0 auto;
+      max-width: 0;
+      animation: 
+        typing 1.2s steps(10, end) forwards,
+        blink 0.6s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { max-width: 0; }
+      to { max-width: 10ch; }
+    }
+
+    @keyframes blink {
+      from, to { border-color: transparent; }
+      50% { border-color: #15521F; }
+    }
+
+    .subtext {
+      text-align: center;
+      margin: 25px auto 0 auto;
+      color: #9B9898;
+      font-size: 1rem;
+      font-family: "Roboto Mono", monospace;
+      font-weight: 500;
+      max-width: 600px;
+    }
+
+    /* --- FIXED GREEN BOTTOM BAR --- */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 12px;
+      background-color: #15521F;
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    /* --- FULL-BLEED WORK SECTION --- */
+    .work-section {
+      width: 100vw;
+      padding: 0px 0 120px;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    .project-card {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 0 1rem;
+    }
+
+    .project-card.full-width {
+      grid-column: 1 / -1;
+      margin-top: 20px;
+    }
+
+    .card-image-wrapper {
+      background: #F0F0F0;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 0px;
+    }
+
+    /* --- FULL WIDTH CARD CONTAINER OPTIMIZATION --- */
+    .project-card.full-width .card-image-wrapper {
+      max-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-card.full-width .card-image-wrapper img {
+      max-height: 90vh;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* --- GRADIENT OVERLAY ON HOVER --- */
+    .project-card:hover .card-image-wrapper {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(80, 220, 255, 0.85) 0%, transparent 50%),
+        radial-gradient(circle at 80% 25%, rgba(185, 80, 255, 0.85) 0%, transparent 55%),
+        radial-gradient(circle at 50% 60%, rgba(255, 100, 200, 0.8) 0%, transparent 50%),
+        radial-gradient(circle at 85% 85%, rgba(255, 80, 80, 0.9) 0%, transparent 50%),
+        radial-gradient(circle at 20% 90%, rgba(255, 150, 80, 0.85) 0%, transparent 50%),
+        #e0f2fe;
+    }
+
+    /* DEFAULT STATE: Full image scale */
+    .card-image-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      transform: scale(1);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .project-card:hover .card-image-wrapper img {
+      transform: scale(1.2); /* Zooms in on hover */
+    }
+
+    /* --- CARD INFO STRUCTURE --- */
+    .card-info {
+      padding: 1rem 1.5rem;
+      width: 100%;
+    }
+
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #111111;
+      line-height: 1.3;
+    }
+
+    .card-category {
+      font-size: 0.9rem;
+      font-family: "Roboto Mono", monospace;
+      color: #888888;
+      font-weight: 300;
+      white-space: nowrap;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .card-description {
+      font-size: 0.9rem;
+      color: #666666;
+      line-height: 1.45;
+      margin-top: 6px;
+      width: 100%; /* Spans full width under header row */
+    }
+
+    /* --- TRANSITION OVERLAY WITH PAUSE --- */
+    .transition-overlay {
+      position: fixed;
+      top: -120%;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #15521F;
+      z-index: 9999;
+      pointer-events: none;
+      
+      transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .transition-overlay svg {
+      position: absolute;
+      bottom: -79px;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      fill: #15521F;
+    }
+
+    .transition-overlay .overlay-logo {
+      width: 100px;
+      height: auto;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.25s ease 0.5s;
+    }
+
+    .transition-overlay.is-active .overlay-logo {
+      opacity: 1;
+    }
+
+    .transition-overlay.is-active {
+      transform: translateY(120%);
+    }
+
+    @media (max-width: 768px) {
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .project-card.full-width {
+        grid-column: auto;
+      }
+    }
+
+    /* --- BOUNCING DOWN ARROW --- */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #1C1B1F;
+      font-size: 32px;
+      cursor: pointer;
+      z-index: 10;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: bounceSlow 2s infinite ease-in-out;
+    }
+
+    @keyframes bounceSlow {
+      0%, 100% {
+        transform: translate(-50%, 0);
+      }
+      50% {
+        transform: translate(-50%, 10px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="new-me.html">Work</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero-section" id="hero">
+    <canvas id="leaf-canvas"></canvas>
+
+    <div class="hero-container">
+      <div class="interactive-title is-typing" id="title-container">
+        <span class="layer-3d l-4">levona yim</span>
+        <span class="layer-3d l-3">levona yim</span>
+        <span class="layer-3d l-2">levona yim</span>
+        <span class="layer-3d l-1">levona yim</span>
+        <span class="main-text" id="magnetic-target">levona yim</span>
+      </div>
+
+      <p class="subtext">A product designer with an experimental maker mindset, designing seamless, empathetic experiences</p>
+    </div>
+
+    <a href="#work" class="scroll-indicator material-symbols-outlined">
+      keyboard_double_arrow_down
+    </a>
+  </section>
+
+  <!-- PORTFOLIO SECTION -->
+  <section class="work-section" id="work">
+    <div class="portfolio-grid">
+
+      <!-- Project 1 -->
+      <a href="btc.html" class="project-card full-width">
+        <div class="card-image-wrapper">
+          <img src="BTC-ProDisplay-middlebottom.png" alt="FICO Composition">
+        </div>
+        <div class="card-info">
+          <div class="card-header-row">
+            <h3 class="card-title">FICO | Business Terms Capability (Data Schemas)</h3>
+            <p class="card-category">B2B &#8226; data analytics &#8226; 2025</p>
+          </div>
+          <p class="card-description">
+            The backbone for building complex, unified data structures.
+          </p>
+        </div>
+      </a>
+
+      <!-- Project 2 left -->
+      <a href="#" class="project-card">
+        <div class="card-image-wrapper">
+          <img src="macbookair-new-eg-dark-middle.png" alt="FICO Business Terms Display Laptop">
+        </div>
+        <div class="card-info">
+          <div class="card-header-row">
+            <h3 class="card-title">FICO | Experience Gateway (Day 0/1)</h3>
+            <p class="card-category">B2B &#8226; onboarding &#8226; 2025</p>
+          </div>
+          <p class="card-description">
+            A seamless entry point for onboarding, feature exploration, and personalization.
+          </p>
+        </div>
+      </a>
+
+      <!-- Project 3 right-->
+      <a href="#" class="project-card">
+        <div class="card-image-wrapper">
+          <img src="test-platform.png" alt="FICO Onboarding interface">
+        </div>
+        <div class="card-info">
+          <div class="card-header-row">
+            <h3 class="card-title">FICO | Platform</h3>
+            <p class="card-category">B2B &#8226; enterprise platform &#8226; 2024</p>
+          </div>
+          <p class="card-description">
+            Enterprise B2B platform turning complex logic into unlimited service configurations.
+          </p>
+        </div>
+      </a>
+      
+      <!-- Project 4 full width -->
+      <a href="#" class="project-card full-width">
+        <div class="card-image-wrapper">
+          <img src="test-fm.png" alt="FICO Composition">
+        </div>
+        <div class="card-info">
+          <div class="card-header-row">
+            <h3 class="card-title">FICO | Feature Aggregation</h3>
+            <p class="card-category">B2B &#8226; data analytics &#8226; 2025</p>
+          </div>
+          <p class="card-description">
+            No-code aggregations for analyzing massive event and transaction data.
+          </p>
+        </div>
+      </a>
+
+      <!-- Project 5 left -->
+      <a href="#" class="project-card">
+        <div class="card-image-wrapper">
+          <img src="macbookair-kashoo.png" alt="Kashoo Display">
+        </div>
+        <div class="card-info">
+          <div class="card-header-row">
+            <h3 class="card-title">Kashoo | Accounting 2.0</h3>
+            <p class="card-category">web app &#8226; 2021</p>
+          </div>
+          <p class="card-description">
+            Cloud accounting dashboard overhaul and responsive web-apps.
+          </p>
+        </div>
+      </a>
+
+      <!-- Project 6 right-->
+      <a href="#" class="project-card">
+        <div class="card-image-wrapper">
+          <img src="ts-mobile2.png" alt="TrulySmall iOS application">
+        </div>
+        <div class="card-info">
+          <div class="card-header-row">
+            <h3 class="card-title">TrulySmall Accounting | Invoicing App</h3>
+            <p class="card-category">iOS app &#8226; 2021</p>
+          </div>
+          <p class="card-description">
+            Free invoice generator for small businesses, freelancers and startup..
+          </p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- FIXED GREEN BOTTOM BAR -->
+  <div class="bottom-bar"></div>
+
+  <!-- TRANSITION OVERLAY -->
+  <div class="transition-overlay" id="overlay">
+    <img src="me-wink.gif" alt="Transition Icon" class="overlay-logo">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,0 C720,120 720,120 1440,0 L1440,0 L0,0 Z" fill="#15521F"></path>
+    </svg>
+  </div>
+
+  <script>
+    // --- 1. FULL PAGE SNAP SCROLL ---
+    let isSnapping = false;
+
+    window.addEventListener('wheel', (e) => {
+      if (window.scrollY < 50 && e.deltaY > 0 && !isSnapping) {
+        e.preventDefault();
+        isSnapping = true;
+        document.body.classList.add('is-snapping');
+
+        document.getElementById('work').scrollIntoView({ behavior: 'smooth' });
+
+        setTimeout(() => {
+          isSnapping = false;
+          document.body.classList.remove('is-snapping');
+        }, 800);
+      }
+    }, { passive: false });
+
+
+    // --- 2. INTERACTIVE TYPOGRAPHY & MAGNETIC EFFECT ---
+    const titleContainer = document.getElementById('title-container');
+    const target = document.getElementById('magnetic-target');
+    const text = target.innerText;
+    target.innerHTML = '';
+
+    const chars = [...text].map(char => {
+      const span = document.createElement('span');
+      span.classList.add('char');
+      span.innerText = char === ' ' ? '\u00A0' : char;
+      target.appendChild(span);
+      return span;
+    });
+
+    setTimeout(() => {
+      titleContainer.classList.remove('is-typing');
+    }, 1200);
+
+    document.addEventListener('mousemove', (e) => {
+      const { innerWidth, innerHeight } = window;
+
+      const x = (e.clientX - innerWidth / 2) / (innerWidth / 2);
+      const y = (e.clientY - innerHeight / 2) / (innerHeight / 2);
+
+      const rotateX = -y * 20;
+      const rotateY = x * 20;
+
+      titleContainer.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      titleContainer.style.setProperty('--mx', x);
+      titleContainer.style.setProperty('--my', y);
+
+      chars.forEach(span => {
+        const charRect = span.getBoundingClientRect();
+        const charCenterX = charRect.left + charRect.width / 2;
+        const charCenterY = charRect.top + charRect.height / 2;
+
+        const distX = e.clientX - charCenterX;
+        const distY = e.clientY - charCenterY;
+        const distance = Math.hypot(distX, distY);
+        const maxDistance = 90;
+
+        if (distance < maxDistance) {
+          const power = (1 - distance / maxDistance) * 25;
+          const moveX = -(distX / distance) * power;
+          const moveY = -(distY / distance) * power;
+          span.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.15)`;
+        } else {
+          span.style.transform = `translate(0px, 0px) scale(1)`;
+        }
+      });
+    });
+
+    document.addEventListener('mouseleave', () => {
+      titleContainer.style.transform = `rotateX(0deg) rotateY(0deg)`;
+      titleContainer.style.setProperty('--mx', 0);
+      titleContainer.style.setProperty('--my', 0);
+      chars.forEach(span => {
+        span.style.transform = `translate(0px, 0px) scale(1)`;
+      });
+    });
+
+
+    // --- 3. SCROLL REVEAL OBSERVER ---
+    const cards = document.querySelectorAll('.project-card');
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    cards.forEach(card => scrollObserver.observe(card));
+
+
+    // --- 4. PAGE TRANSITION NAV HANDLER ---
+    // Covers both the top nav links and the project cards, so clicking
+    // through to any project page uses the same green sweep transition.
+    const transitionLinks = document.querySelectorAll('.nav-link, .project-card');
+    const overlay = document.getElementById('overlay');
+
+    transitionLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const targetUrl = link.getAttribute('href');
+
+        // Skip in-page anchors and placeholder "#" links (no destination yet)
+        // and any link with a modifier key or opened in a new tab.
+        if (!targetUrl || targetUrl === '#' || targetUrl.startsWith('#')) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || link.target === '_blank') return;
+
+        e.preventDefault();
+        overlay.classList.add('is-active');
+
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 1250);
+      });
+    });
+
+
+    // --- 5. BOTANICAL CANVAS ENGINE ---
+    const canvas = document.getElementById('leaf-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let flowers = [];
+    let lastSpawn = 0;
+
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Flower {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 20 + 25;
+        this.variant = Math.floor(Math.random() * 2);
+        this.angle = (Math.random() - 0.5) * 0.4;
+        this.opacity = 1;
+        this.scale = 0.1;
+        this.color = '#15521F';
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.scale(this.scale, this.scale);
+
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 1.8;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.globalAlpha = this.opacity;
+
+        if (this.variant === 0) {
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.quadraticCurveTo(5, 20, 0, 40);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.ellipse(-8, 25, 10, 4, -Math.PI / 4, 0, Math.PI * 2);
+          ctx.ellipse(8, 20, 10, 4, Math.PI / 4, 0, Math.PI * 2);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(0, -10, 5, 0, Math.PI * 2);
+          ctx.stroke();
+
+          const petalCount = 6;
+          for (let i = 0; i < petalCount; i++) {
+            const rad = (i * Math.PI * 2) / petalCount;
+            ctx.save();
+            ctx.translate(0, -10);
+            ctx.rotate(rad);
+            ctx.beginPath();
+            ctx.ellipse(0, -10, 4, 8, 0, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+          }
+        } else if (this.variant === 1) {
+          ctx.beginPath();
+          ctx.moveTo(0, 40);
+          ctx.quadraticCurveTo(-10, 10, 15, -30);
+          ctx.stroke();
+
+          const budPositions = [
+            { x: -5, y: 20, dir: -1 },
+            { x: 2, y: 5, dir: 1 },
+            { x: -2, y: -10, dir: -1 },
+            { x: 10, y: -22, dir: 1 }
+          ];
+
+          budPositions.forEach(b => {
+            ctx.beginPath();
+            ctx.moveTo(b.x, b.y);
+            ctx.lineTo(b.x + b.dir * 12, b.y - 8);
+            ctx.stroke();
+
+            ctx.save();
+            ctx.translate(b.x + b.dir * 12, b.y - 8);
+            ctx.beginPath();
+            ctx.arc(-2, -2, 3, 0, Math.PI * 2);
+            ctx.arc(2, -2, 3, 0, Math.PI * 2);
+            ctx.lineTo(0, 4);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.restore();
+          });
+        }
+
+        ctx.restore();
+      }
+
+      update() {
+        if (this.scale < 1) this.scale += 0.06;
+        this.opacity -= 0.01;
+      }
+    }
+
+    document.getElementById('hero').addEventListener('mousemove', (e) => {
+      const now = Date.now();
+      if (now - lastSpawn > 60) {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        flowers.push(new Flower(x, y));
+        lastSpawn = now;
+      }
+    });
+
+    function animateFlowers() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = flowers.length - 1; i >= 0; i--) {
+        flowers[i].update();
+        flowers[i].draw();
+
+        if (flowers[i].opacity <= 0) {
+          flowers.splice(i, 1);
+        }
+      }
+
+      requestAnimationFrame(animateFlowers);
+    }
+
+    animateFlowers();
+
+    // Automatically highlight active nav link based on current page URL
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentPath = window.location.pathname.split('/').pop() || 'new-me.html';
+      const navLinks = document.querySelectorAll('nav a');
+
+      navLinks.forEach(link => {
+        const linkPath = link.getAttribute('href').split('/').pop();
+        
+        if (linkPath === currentPath) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

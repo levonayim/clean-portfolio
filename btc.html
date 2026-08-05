@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FICO | Business Terms Capability — Levona Yim</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --green: #15521F;
+      --accent: #0251FD;
+      --bg-soft: #f5f5f5;
+      --bg-soft-2: #f7f7f7;
+      --text-main: #111111;
+      --text-muted: #666666;
+      --content-w: 720px;
+      --wide-w: 1320px;
+      --side-pad: clamp(24px, 8vw, 395px);
+    }
+
+    body {
+      background-color: #FAFAFA;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* --- NAVIGATION (shared with site) --- */
+    nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      background: #ffffff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      z-index: 100;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.2s ease, font-weight 0.2s ease;
+    }
+
+    nav a.active {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .inner-links{
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--accent);
+    }
+
+    .inner-links:hover{
+      font-weight: 500;
+      text-decoration: line-through;
+      color: var(--accent);
+    }
+
+    /* --- FIXED GREEN BOTTOM BAR (shared with site) --- */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 12px;
+      background-color: var(--green);
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    /* --- SCROLL PROGRESS BAR --- */
+    .scroll-progress-track {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 5px;
+      background-color: #e5e5e5;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    .scroll-progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: var(--accent);
+      transition: width 0.08s linear;
+    }
+
+    /* --- TRANSITION OVERLAY (shared with site) --- */
+    .transition-overlay {
+      position: fixed;
+      top: -120%;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--green);
+      z-index: 9999;
+      pointer-events: none;
+      transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .transition-overlay svg {
+      position: absolute;
+      bottom: -79px;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      fill: var(--green);
+    }
+    .transition-overlay .overlay-logo {
+      width: 100px;
+      height: auto;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.25s ease 0.5s;
+    }
+    .transition-overlay.is-active .overlay-logo { opacity: 1; }
+    .transition-overlay.is-active { transform: translateY(120%); }
+
+    /* --- HERO IMAGE --- */
+    .btc-hero {
+      width: 100%;
+      background: var(--bg-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+    }
+    .btc-hero .media-frame {
+      width: 80%;
+      max-height: 80vh;
+    }
+    .btc-hero img { max-height: 90vh; }
+
+    /* --- IMAGE PLACEHOLDER SYSTEM --- */
+    .media-frame {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      /*background: #eaeaea;*/
+    }
+    .media-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .media-frame.img-missing {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        repeating-linear-gradient(45deg, #ececec 0 12px, #f4f4f4 12px 24px);
+      border: 1px dashed #c9c9c9;
+    }
+    .media-frame.img-missing img { display: none; }
+    .media-frame.img-missing::after {
+      content: attr(data-label);
+      font-family: "Roboto Mono", monospace;
+      font-size: 0.8rem;
+      color: #9a9a9a;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    /* --- SECTION SHELLS --- */
+    .section {
+      width: 100%;
+      padding: 80px var(--side-pad);
+    }
+    .section.tight { padding-top: 80px; padding-bottom: 80px; }
+    .section.roomy { padding-top: 120px; padding-bottom: 120px; }
+    .section.roomiest { padding-top: 160px; padding-bottom: 160px; }
+    .section-inner {
+      max-width: var(--content-w);
+      margin: 0 auto;
+    }
+    .section.on-blue {
+      background: var(--accent);
+      color: #fff;
+    }
+    .section.on-soft {
+      background: var(--bg-soft);
+    }
+
+    .eyebrow {
+      font-weight: 200;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      color: inherit;
+      margin-bottom: 0;
+      display: block;
+    }
+
+    /* --- HEADER BLOCK --- */
+    .btc-title {
+      font-size: clamp(1.6rem, 2.6vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.32px;
+      color: #000;
+      text-align: center;
+      line-height: 1.3;
+      margin-bottom: 64px;
+    }
+
+    .btc-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 64px;
+    }
+    .btc-meta .meta-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 160px;
+      flex: 1;
+    }
+    .btc-meta .meta-label {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #000;
+    }
+    .btc-meta .meta-value,
+    .btc-meta .meta-value p {
+      font-weight: 400;
+      font-size: 1rem;
+      color: #000;
+      line-height: 1.5;
+    }
+
+    .tldr-box {
+      border: 1px dashed var(--accent);
+      border-radius: 4px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    .tldr-box .tldr-label {
+      font-family: "Roboto Mono", monospace;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .tldr-box p {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #000;
+    }
+    .tldr-box .highlight { 
+      color: #000;
+      font-weight: 700;
+    }
+
+    .project-top { 
+      text-align: center;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* --- BODY TEXT --- */
+    .body-copy {
+      font-size: 1.35rem;
+      line-height: 1.35;
+      font-weight: 300;
+      color: #000;
+    }
+    .body-copy p + p { margin-top: 1em; }
+    .body-copy strong, .body-copy b { font-weight: 600; }
+
+    .divider {
+      width: 200px;
+      height: 1px;
+      background: #d6d6d6;
+      margin: 0 auto;
+    }
+    .divider-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 80px 0;
+    }
+
+    ul.styled, ol.styled {
+      padding-left: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      font-size: 1.35rem;
+      line-height: 1.25;
+      color: #000;
+    }
+    .on-blue ul.styled, .on-blue ol.styled { color: #fff; }
+    ul.styled li .li-body, ol.styled li .li-body { font-weight: 200; }
+
+    /* --- OVERVIEW / CONTRIBUTION --- */
+    .stack-8 { display: flex; flex-direction: column; gap: 8px; }
+    .stack-16 { display: flex; flex-direction: column; gap: 16px; }
+    .stack-24 { display: flex; flex-direction: column; gap: 24px; }
+    .stack-48 { display: flex; flex-direction: column; gap: 48px; }
+    .stack-56 { display: flex; flex-direction: column; gap: 56px; }
+
+    /* --- IMPACT GRID --- */
+    .impact-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .impact-item {
+      flex: 1 1 260px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .impact-item h3 {
+      font-size: 1.35rem;
+      font-weight: 600;
+    }
+    .impact-item p {
+      font-size: 1.35rem;
+      line-height: 1.5;
+    }
+
+    /* --- PROCESS PHASES --- */
+    .phase-title {
+      font-weight: 200;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      display: block;
+    }
+    .quote-line {
+      font-style: italic;
+    }
+
+    /* --- MEDIA GRIDS --- */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      padding: var(--side-pad);
+      background: #fff;
+    }
+    .media-grid .media-frame { aspect-ratio: 4 / 3; }
+
+    .media-row {
+      display: flex;
+      gap: 24px;
+      padding: 24px var(--side-pad);
+      flex-wrap: wrap;
+    }
+    .media-row .media-frame {
+      flex: 1 1 400px;
+      aspect-ratio: 4 / 3;
+      background: var(--bg-soft);
+    }
+
+    .media-full {
+      padding: 0 var(--side-pad);
+      background: var(--bg-soft);
+    }
+    .media-full .media-frame { aspect-ratio: 2732 / 2048; }
+
+    @media (max-width: 768px) {
+      .btc-meta { flex-direction: column; }
+      .impact-grid { flex-direction: column; }
+      .section { padding-left: 24px; padding-right: 24px; }
+      .media-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scroll-progress-track">
+    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+  </div>
+
+  <nav>
+    <a href="index.html" class="nav-link">Work</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="new-me.html#contact" class="nav-link">Contact</a>
+  </nav>
+
+  <!-- HERO IMAGE -->
+  <section class="btc-hero">
+    <div class="media-frame">
+      <img src="BTC-ProDisplay-center-75.png" alt="FICO Composition">
+    </div>
+  </section>
+
+  <!-- HEADER: TITLE / META / TL;DR -->
+  <section class="section">
+    <div class="section-inner stack-24">
+      <span class="project-top">Business Terms Capability (BTC)</span>
+      <h1 class="btc-title">Designing the single source of truth for every service's data schema</h1>
+
+      <div class="btc-meta">
+        <div class="meta-col">
+          <span class="meta-label">Timeline</span>
+          <span class="meta-value">2023–2025</span>
+        </div>
+        <div class="meta-col">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">Lead Product Designer</span>
+        </div>
+        <div class="meta-col">
+          <span class="meta-label">Tools</span>
+          <div class="meta-value">
+            <p>Figma</p>
+            <p>Pen &amp; Paper</p>
+            <p>Claude (post-FICO)</p>
+            <p>Gemini (post-FICO)</p>
+          </div>
+        </div>
+        <div class="meta-col">
+          <span class="meta-label">Team</span>
+          <div class="meta-value">
+            <p>Product Managers</p>
+            <p>VP of Architecture</p>
+            <p>Front-End Architect</p>
+            <p>Engineering Team</p>
+            <p>Solution Architect</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tldr-box">
+        <span class="tldr-label">TL;DR</span>
+        <p>
+          <span class="highlight">Business Terms Capability (BTC) </span>is the <a href="https://www.fico.com/en/fico-platform" target="_blank" class="inner-links">FICO Platform's</a> single source of truth for defining and organizing all incoming, outgoing, and internal decision service data schemas. By standardizing these business definitions across the platform, BTC eliminates conflicting data models, fragile business logic, and downstream system failures caused by upstream changes. I lead the designs for a centralized schema management system as well as a self-serve Micro Front-End (MFE) component.
+        </p>
+        <p>I later expanded this work independently into an advanced concept exploring ERD canvas models and AI integrations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOUBLETEST IMAGE -->
+  <div class="media-full" style="padding-top:40px; padding-bottom:40px;">
+    <div class="" data-label="BTC-doubletest-1.png">
+      <img src="BTC-doubletest-1.png" alt="BTC schema comparison view">
+    </div>
+  </div>
+
+  <!-- OVERVIEW + MY CONTRIBUTION -->
+  <section class="section roomy">
+    <div class="section-inner stack-56">
+      <div class="stack-16">
+        <span class="eyebrow" style="color:#000;">overview</span>
+        <div class="body-copy">
+          <p><strong>Business Terms Capability (BTC)</strong> is a foundational service on the <a href="https://www.fico.com/en/fico-platform" target="_blank" class="inner-links">FICO Platform</a> that manages schemas. It is the single source of truth for how data is defined, organized, and understood across every service a client uses.</p>
+          <p>Without it, every service defines its own data structure independently. As services multiply, so do conflicting definitions, misaligned schemas, and fragile business logic. A single upstream change risks breaking everything downstream.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="stack-16">
+        <span class="eyebrow" style="color:#000;">my contribution</span>
+        <div class="body-copy">
+          <p>I led the end-to-end design of BTC from a lightweight, embeddable MFE that unblocked engineering teams, through a full table redesign, to a canvas-based concept for exploring data relationships. After leaving FICO, I continued developing the concept without technical constraints to push the vision further.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT -->
+  <section class="section on-blue roomiest">
+    <div class="section-inner" style="max-width: var(--wide-w);">
+      <div class="stack-24">
+      <span class="eyebrow">impact</span>
+        <div class="impact-grid">
+          <div class="impact-item">
+            <h3>Eliminated onboarding friction</h3>
+            <p>removed weeks of cross-team coordination; users can now set up their own schemas in seconds</p>
+          </div>
+          <div class="impact-item">
+            <h3>Increased user autonomy</h3>
+            <p>Technical and non-technical users can configure complex data structures without a solution consultant</p>
+          </div>
+          <div class="impact-item">
+            <h3>Built for reuse</h3>
+            <p>product teams can drop the MFE into their own host environments with zero adjustments required</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAMPLE IMAGE -->
+  <div class="media-full" style="padding-top:40px; padding-bottom:40px;">
+    <div class="" data-label="BTC-doubletest-1.png">
+      <img src="BTC-doubletest-1.png" alt="test image">
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section class="section">
+    <div class="section-inner stack-16">
+      <span class="eyebrow" style="color:#000;">problem</span>
+      <div class="stack-24">
+        <div class="body-copy">
+          <p>FICO's existing Decision Modeller Platform required users to constantly jump between disconnected services and rely on memory to track how their workflows connected.</p>
+          <p><strong>There was no centralized way to define, view, or govern data schemas, which meant:</strong></p>
+        </div>
+        <ul class="styled">
+          <li>Every service risked defining the same data differently</li>
+          <li>Non-technical users couldn't configure data structures without a solution consultant</li>
+          <li>Teams building on top of BTC had no reusable component to build from</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAMPLE IMAGE -->
+  <div class="media-full" style="padding-top:40px; padding-bottom:40px;">
+    <div class="" data-label="BTC-doubletest-1.png">
+      <img src="BTC-doubletest-1.png" alt="test image">
+    </div>
+  </div>
+
+  <!-- PROCESS: PHASE 1 -->
+  <section class="section roomy">
+    <div class="section-inner stack-56">
+      <span class="eyebrow" style="color:#000;">process</span>
+
+      <div class="stack-16">
+        <span class="phase-title">Phase 1 — Laying the Groundwork (Internal Limited Availability, ~4 months)</span>
+
+        <div class="stack-48">
+          <div class="body-copy">
+            <p>I partnered with the PMs for BTC and Decision Trees, the Front-End Architect, and a Product Designer from the Decision Trees team to define what an internal limited-availability release actually needed to include.</p>
+            <p>Through this discovery, four needs stood out:</p>
+          </div>
+
+          <ol class="styled">
+            <li><strong>Data migration</strong> — existing users needed a seamless way to bring their work into the new platform</li>
+            <li><strong>Reduced cognitive overload</strong> — users needed to stay in one continuous flow instead of jumping between disconnected tools</li>
+            <li><strong>A focused MVP</strong> — every decision service depended on BTC, but we couldn't build it all at once, so we scoped the critical 20% into a standalone, modular component other teams could plug into</li>
+            <li><strong>A dedicated foundation</strong> — technical users still needed a base environment to build and adjust their data models directly</li>
+          </ol>
+
+          <div class="body-copy">
+            <p>Based on these priorities, I designed a standalone BTC micro-frontend, focused on letting users import their data and clearly view their resulting data structure.</p>
+            <p><strong>Outcome: Immediate adoption by both the Decision Tree and Feature Management teams.</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEDIA GRID: PHASE 1 SCREENS -->
+  <div class="media-grid">
+    <div class="media-frame" data-label="Add image: BTC-phase1-01.png"><img src="BTC-phase1-01.png" alt="BTC Phase 1 screen 1"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase1-02.png"><img src="BTC-phase1-02.png" alt="BTC Phase 1 screen 2"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase1-03.png"><img src="BTC-phase1-03.png" alt="BTC Phase 1 screen 3"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase1-04.png"><img src="BTC-phase1-04.png" alt="BTC Phase 1 screen 4"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase1-05.png"><img src="BTC-phase1-05.png" alt="BTC Phase 1 screen 5"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase1-06.png"><img src="BTC-phase1-06.png" alt="BTC Phase 1 screen 6"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase1-07.png"><img src="BTC-phase1-07.png" alt="BTC Phase 1 screen 7"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase1-08.png"><img src="BTC-phase1-08.png" alt="BTC Phase 1 screen 8"></div>
+  </div>
+
+  <div class="divider-wrap"><div class="divider"></div></div>
+
+  <!-- PROCESS: PHASE 2 -->
+  <section class="section tight">
+    <div class="section-inner stack-24">
+      <span class="phase-title" style="color:#000;">Phase 2 — Canvas Exploration</span>
+      <div class="body-copy stack-16">
+        <p>With the internal release live, I turned to a group we hadn't designed for yet: business users. I interviewed FICO's Solution Architects and Consultants — the people who build solutions directly with clients — to understand how they actually worked with data.</p>
+        <p>Key insight: dense tables work well for technical users used to Excel, but business users need a more visual way to explore data — a workspace for mapping out relationships between assets, which a flat table can't support alone.</p>
+        <p><strong>Outcome: Strong positive feedback from internal Solution Consultants, who were eager to see the concept released.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEDIA GRID: PHASE 2 SCREENS -->
+  <div class="media-grid">
+    <div class="media-frame" data-label="Add image: BTC-phase2-01.png"><img src="BTC-phase2-01.png" alt="BTC Canvas exploration screen 1"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase2-02.png"><img src="BTC-phase2-02.png" alt="BTC Canvas exploration screen 2"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase2-03.png"><img src="BTC-phase2-03.png" alt="BTC Canvas exploration screen 3"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase2-04.png"><img src="BTC-phase2-04.png" alt="BTC Canvas exploration screen 4"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase2-05.png"><img src="BTC-phase2-05.png" alt="BTC Canvas exploration screen 5"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase2-06.png"><img src="BTC-phase2-06.png" alt="BTC Canvas exploration screen 6"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase2-07.png"><img src="BTC-phase2-07.png" alt="BTC Canvas exploration screen 7"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase2-08.png"><img src="BTC-phase2-08.png" alt="BTC Canvas exploration screen 8"></div>
+  </div>
+
+  <div class="divider-wrap"><div class="divider"></div></div>
+
+  <!-- PROCESS: PHASE 3 -->
+  <section class="section tight">
+    <div class="section-inner stack-24">
+      <span class="phase-title" style="color:#000;">Phase 3 — Refining the Table &amp; Continuing the Canvas Exploration</span>
+      <div class="stack-24">
+        <div class="body-copy">
+          <p>Despite the enthusiasm for canvas, the team made the call to ship the table version only for beta — giving engineering the stability to launch confidently alongside other products releasing in parallel. In parallel, I kept developing the canvas concept.</p>
+          <p>This phase focused on:</p>
+        </div>
+        <ul class="styled">
+          <li>Adopting the platform's newly updated design system, including full dark/light mode support</li>
+          <li>Integrating the new global navigation across the platform</li>
+          <li>Continuing to iterate on canvas, including merging in the Aggregation service — presented at FICO World 2025's Innovation Centre</li>
+        </ul>
+        <p class="body-copy quote-line">"This is exactly what we need to build our solutions." "When will this be available? I want it now." — Feedback from FICO World 2025</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHASE 3 MEDIA: two-up, full, two-up -->
+  <div class="media-row">
+    <div class="media-frame" data-label="Add image: BTC-phase3-01.png"><img src="BTC-phase3-01.png" alt="BTC Phase 3 screen 1"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase3-02.png"><img src="BTC-phase3-02.png" alt="BTC Phase 3 screen 2"></div>
+  </div>
+  <div class="media-row">
+    <div class="media-frame" data-label="Add image: BTC-phase3-03.png"><img src="BTC-phase3-03.png" alt="BTC Phase 3 screen 3" style="aspect-ratio:2732/1050;"></div>
+  </div>
+  <div class="media-row">
+    <div class="media-frame" data-label="Add image: BTC-phase3-04.png"><img src="BTC-phase3-04.png" alt="BTC Phase 3 screen 4"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase3-05.png"><img src="BTC-phase3-05.png" alt="BTC Phase 3 screen 5"></div>
+  </div>
+
+  <div class="divider-wrap"><div class="divider"></div></div>
+
+  <!-- FUTURE VISION -->
+  <section class="section on-blue roomy">
+    <div class="section-inner stack-24">
+      <span class="eyebrow">future vision</span>
+      <div class="stack-48">
+        <p style="font-size:1.35rem; line-height:1.6; font-weight: 300;">After leaving FICO, I kept developing BTC on my own time, free of technical constraints, to explore where the concept could go next:</p>
+        <ul class="styled">
+          <li><strong>Scalable navigation &amp; component architecture</strong><span class="li-body"> — re-architected the platform's navigation so switching between Table and Canvas views feels seamless, laying the groundwork for a unified workspace that can grow with the platform</span></li>
+          <li><strong>Contextual AI integration</strong><span class="li-body"> — explored an AI system that reads a user's initial data blocks to predict schema intent, proactively suggesting structural autofills and recommendations as they build</span></li>
+          <li><strong>Project dashboards &amp; draft sandboxes</strong><span class="li-body"> — designed a BTC landing experience to close a gap in the original flow: a way to manage multiple active projects or open a sandbox to prototype freely</span></li>
+          <li><strong>Verified templates</strong><span class="li-body"> — a template library offering both certified FICO frameworks and AI-assisted templates generated from a team's own governance models</span></li>
+          <li><strong>Unified analytics &amp; aggregation</strong><span class="li-body"> — building on the FICO World 2025 feedback, mapped out embedding live data aggregations directly into the core workspace to remove context-switching between tools</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING DOUBLETEST IMAGES -->
+  <div class="media-full" style="padding-top:40px; padding-bottom:40px;">
+    <div class="media-frame" data-label="Add image: BTC-doubletest-2.png" style="aspect-ratio:2732/838;">
+      <img src="BTC-doubletest-2.png" alt="BTC future vision concept 1">
+    </div>
+  </div>
+  <div class="media-full" style="padding-top:40px; padding-bottom:40px;">
+    <div class="media-frame" data-label="Add image: BTC-doubletest-3.png" style="aspect-ratio:2732/838;">
+      <img src="BTC-doubletest-3.png" alt="BTC future vision concept 2">
+    </div>
+  </div>
+
+  <!-- FIXED GREEN BOTTOM BAR -->
+  <div class="bottom-bar"></div>
+
+  <!-- TRANSITION OVERLAY -->
+  <div class="transition-overlay" id="overlay">
+    <img src="me-wink.gif" alt="Transition Icon" class="overlay-logo">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,0 C720,120 720,120 1440,0 L1440,0 L0,0 Z" fill="#15521F"></path>
+    </svg>
+  </div>
+
+  <script>
+    // Show a friendly placeholder for any image not yet added to the project folder
+    document.querySelectorAll('.media-frame img').forEach(img => {
+      img.addEventListener('error', () => {
+        img.closest('.media-frame').classList.add('img-missing');
+      }, { once: true });
+    });
+
+    // Scroll progress bar — fills as the user scrolls toward the bottom
+    const scrollProgressBar = document.getElementById('scrollProgressBar');
+    function updateScrollProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      scrollProgressBar.style.width = progress + '%';
+    }
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    window.addEventListener('resize', updateScrollProgress);
+    updateScrollProgress();
+
+    // Page transition nav handler (shared with site)
+    const navLinks = document.querySelectorAll('.nav-link');
+    const overlay = document.getElementById('overlay');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const targetUrl = link.getAttribute('href');
+        if (targetUrl.startsWith('#')) return;
+        e.preventDefault();
+        overlay.classList.add('is-active');
+        setTimeout(() => { window.location.href = targetUrl; }, 1250);
+      });
+    });
+
+    // Highlight active nav link based on current page URL
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentPath = window.location.pathname.split('/').pop() || 'btc.html';
+      document.querySelectorAll('nav a').forEach(link => {
+        const linkPath = link.getAttribute('href').split('#')[0].split('/').pop();
+        link.classList.toggle('active', linkPath === currentPath);
+      });
+    });
+  </script>
+</body>
+</html>

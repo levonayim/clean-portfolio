@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: #f7f7f7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    nav {
+      position: fixed;
+      top: 20px;
+      display: flex;
+      gap: 20px;
+      background: #ffffff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      z-index: 10;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .content-card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    h1 {
+      color: #ff4d2d;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* Transition Overlay */
+    .transition-overlay {
+      position: fixed;
+      top: -120%;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #ff4d2d;
+      z-index: 9999;
+      pointer-events: none;
+      transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .transition-overlay svg {
+      position: absolute;
+      bottom: -79px;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      fill: #ff4d2d;
+    }
+
+    .transition-overlay.is-active {
+      transform: translateY(120%);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="new-me.html" class="nav-link">Home</a>
+    <a href="about.html">About Me</a>
+  </nav>
+
+  <div class="content-card">
+    <h1>About Me</h1>
+    <p>This is the destination page! Notice how clicking "Home" triggers the same smooth orange transition overlay to take you back.</p>
+  </div>
+
+  <div class="transition-overlay" id="overlay">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,0 C720,120 720,120 1440,0 L1440,0 L0,0 Z"></path>
+    </svg>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('.nav-link');
+    const overlay = document.getElementById('overlay');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetUrl = link.getAttribute('href');
+
+        overlay.classList.add('is-active');
+
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 500);
+      });
+    });
+  </script>
+</body>
+</html>
