@@ -186,6 +186,19 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform 0.2s ease;
+    }
+    .media-frame {
+      cursor: pointer;
+    }
+    .media-frame:hover img {
+      transform: scale(1.02);
+    }
+    .media-frame.img-missing {
+      cursor: default;
+    }
+    .media-frame.img-missing:hover img {
+      transform: none;
     }
     .media-frame.img-missing {
       display: flex;
@@ -404,7 +417,7 @@
     }
 
     .less-spacing {
-      padding: 24px 80px 0 80px !important;
+      padding: 40px 80px !important;
     }
 
     /* --- LIGHTBOX MODAL STYLES --- */
@@ -849,16 +862,16 @@
   </section>
 
  <!-- MEDIA GRID: PHASE 1 SCREENS -->
-  <div class="media-grid two-by-two-grid">
+  <div class="media-grid less-spacing two-by-two-grid">
     <!-- EMBEDDED FIGMA -->
     <div class="figma-container">
       <div class="figma-frame">
-        <iframe 
-          src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/iBlkk0TphVBocUrHV6WckM/Landing-pages-for-portfolio?node-id=111-435740&viewport=-9512%2C-783%2C0.49&t=9YjejXWM7KFEsFU6-1&scaling=contain&content-scaling=fixed&starting-point-node-id=104%3A434828&page-id=68%3A247307&hide-ui=1"
-          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
-        </iframe>
-      </div>
-      <span class="phase-title" style="color:#000; text-align: center; padding-bottom: 48px;">Above: BTC Micro Frontend inside Feature Sets</span>
+          <iframe 
+            src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/iBlkk0TphVBocUrHV6WckM/Landing-pages-for-portfolio?node-id=111-435740&viewport=-1903%2C-482%2C0.15&t=UHLRCFnN7qt72sYD-1&scaling=contain&content-scaling=fixed&starting-point-node-id=104%3A434828&page-id=68%3A247307&hide-ui=1"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+          </iframe>
+        </div>
+      <span class="phase-title" style="color:#000; text-align: center; padding-bottom: 48px; margin-top: -24px">Above: BTC Micro Frontend inside Feature Sets</span>
     </div>
 
     <div class="media-grid less-spacing">
@@ -884,7 +897,6 @@
     </div>
   </section>
 
-
   <!-- MEDIA GRID: PHASE 2 SCREENS -->
   <div class="media-grid less-spacing two-by-two-grid">
       <!-- EMBEDDED FIGMA -->
@@ -895,7 +907,7 @@
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
           </iframe>
         </div>
-        <span class="phase-title" style="color:#000; text-align: center; padding-bottom: 48px;">Above: Exploring the Entity Relationship Diagram integrated with the table view.</span>
+        <span class="phase-title" style="color:#000; text-align: center; padding-bottom: 48px; margin-top: -24px">Above: Exploring the Entity Relationship Diagram integrated with the table view.</span>
       </div>
 
       <div class="media-grid">
@@ -1022,7 +1034,7 @@
       });
     });
 
-    // --- LIGHTBOX INTERACTIVITY FOR PHASE 1 MEDIA GRID ---
+    // --- LIGHTBOX INTERACTIVITY FOR ALL MEDIA-FRAME IMAGES ON THE PAGE ---
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('lightboxModal');
   const modalImg = document.getElementById('lightboxImg');
@@ -1030,9 +1042,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const prevBtn = document.getElementById('lightboxPrev');
   const nextBtn = document.getElementById('lightboxNext');
 
-  // Select images specifically inside the Phase 1 media grid
-  const gridFrames = document.querySelectorAll('.media-grid .media-frame');
-  const images = Array.from(gridFrames).map(frame => frame.querySelector('img')).filter(Boolean);
+  // Select every media-frame on the page that actually contains an <img>
+  // (covers the hero, media-grid, media-row, and media-full images alike)
+  const gridFrames = Array.from(document.querySelectorAll('.media-frame')).filter(frame => frame.querySelector('img'));
+  const images = gridFrames.map(frame => frame.querySelector('img'));
 
   let currentIndex = 0;
 
@@ -1062,7 +1075,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   gridFrames.forEach((frame, index) => {
-    frame.addEventListener('click', () => openLightbox(index));
+    frame.addEventListener('click', () => {
+      // Skip placeholder frames whose image failed to load
+      if (frame.classList.contains('img-missing')) return;
+      openLightbox(index);
+    });
   });
 
   closeBtn.addEventListener('click', closeLightbox);
