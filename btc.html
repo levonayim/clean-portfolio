@@ -154,6 +154,26 @@
     }
     .btc-hero img { max-height: 90vh; }
 
+    /* --- ESTIMATED READ TIME BADGE --- */
+    .read-time-badge {
+      display: inline-block;
+      background-color: var(--accent); /* Uses your site's accent blue #0251FD */
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 300;
+      padding: 6px 16px;
+      border-radius: 48px;
+      margin: 0 auto;
+      text-align: center;
+      width: fit-content;
+    }
+
+    .header-top-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     /* --- IMAGE PLACEHOLDER SYSTEM --- */
     .media-frame {
       position: relative;
@@ -305,7 +325,7 @@
     }
 
     ul.styled, ol.styled {
-      padding-left: 36px;
+      padding-left: 24px;
       display: flex;
       flex-direction: column;
       gap: 2rem;
@@ -358,13 +378,115 @@
 
     /* --- MEDIA GRIDS --- */
     .media-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Centers items in the last row */
       gap: 24px;
       padding: var(--side-pad);
       background: #fff;
     }
-    .media-grid .media-frame { aspect-ratio: 4 / 3; }
+
+    .media-grid .media-frame {
+      flex: 1 1 calc((100% - 72px) / 4);
+      max-width: calc((100% - 72px) / 4);
+      min-width: 240px;
+      aspect-ratio: 4 / 3;
+      background: var(--bg-soft);
+      cursor: pointer;
+    }
+
+    .media-grid .media-frame img {
+      transition: transform 0.2s ease;
+    }
+
+    .media-grid .media-frame:hover img {
+      transform: scale(1.02);
+    }
+
+    .less-spacing {
+      padding: 24px 80px 0 80px !important;
+    }
+
+    /* --- LIGHTBOX MODAL STYLES --- */
+    .lightbox-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.88);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox-modal.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-btn {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 28px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .lightbox-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.08);
+    }
+
+    .lightbox-close {
+      top: -60px;
+      right: 0;
+    }
+
+    .lightbox-prev {
+      left: -70px;
+    }
+
+    .lightbox-next {
+      right: -70px;
+    }
+
+    @media (max-width: 768px) {
+      .lightbox-prev { left: 10px; }
+      .lightbox-next { right: 10px; }
+      .lightbox-close { top: 10px; right: 10px; }
+    }
 
     .media-row {
       display: flex;
@@ -372,24 +494,180 @@
       padding: 24px var(--side-pad);
       flex-wrap: wrap;
     }
-    .media-row .media-frame {
-      flex: 1 1 400px;
-      aspect-ratio: 4 / 3;
+
+
+    /* --- FULL-WIDTH MEDIA CONTAINER --- */
+    .media-full {
+      /*padding: 0 var(--side-pad);*/
+      padding: 1rem 0;
       background: var(--bg-soft);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .media-full {
-      padding: 0 var(--side-pad);
-      background: var(--bg-soft);
+    .first-double-image {
+      background: rgba(99, 149, 428, 0.1) !important;
     }
-    .media-full .media-frame { aspect-ratio: 2732 / 2048; }
+
+    /* Ensure the wrapper centers and doesn't exceed 840px */
+    .media-full .media-frame {
+      width: 100%;
+      max-height: 840px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Constrain the image while keeping proportions responsive */
+    .media-full .media-frame img {
+      width: 90%;
+      height: auto;
+      max-height: 840px;
+      /*object-fit: contain;*/
+    }
+    /*.media-full .media-frame { aspect-ratio: 2732 / 2048; }*/
 
     @media (max-width: 768px) {
+      .btc-hero .media-frame { width: 100%; }
       .btc-meta { flex-direction: column; }
       .impact-grid { flex-direction: column; }
       .section { padding-left: 24px; padding-right: 24px; }
+      .section.roomy { padding-top: 80px; padding-bottom: 80px; }
+      .section.roomiest { padding-top: 100px; padding-bottom: 100px; }
+      .section.tight { padding-top: 56px; padding-bottom: 56px; }
       .media-row { flex-direction: column; }
+      .tldr-box { padding: 20px; }
+      .divider-wrap { padding: 80px 0 40px 0; }
+      ul.styled, ol.styled { gap: 1.25rem; padding-left: 28px; }
     }
+
+    @media (max-width: 480px) {
+      nav {
+        gap: 10px;
+        padding: 10px 16px;
+      }
+      nav a {
+        font-size: 0.72rem;
+        letter-spacing: 0.5px;
+      }
+      .btc-title { margin-bottom: 40px; }
+      .btc-meta { margin-bottom: 40px; }
+    }
+
+    /* --- FIGMA EMBED WRAPPER --- */
+    .figma-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    .figma-frame {
+      position: relative;
+      width: 100%;
+      height: 600px; /* Adjust desktop height as needed */
+      /*border: 1px solid #E5E5E5;*/
+      border-radius: 8px;
+      overflow: hidden;
+      /*background: var(--bg-soft);*/
+    }
+
+    .figma-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    @media (max-width: 768px) {
+      .figma-frame {
+        height: 400px; /* Scaled-down height for mobile */
+      }
+    }
+
+    /* --- 2x2 SQUARE GRID LAYOUT --- */
+    .two-by-two-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px; /* 24px gap between rows and columns */
+    }
+
+    .two-by-two-grid .media-frame {
+/*      flex: 0 0 calc((100% - 24px) / 2);
+      max-width: calc((100% - 24px) / 2);*/
+      min-width: 280px;
+      aspect-ratio: 2 / 1; /* Forces square ratio */
+      background-color: #F5F5F5; /* Soft light gray background */
+      max-height: calc(100vw * 0.35 - 6rem); /* Reduces height by 100px */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .two-by-two-grid .media-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Keeps full image visible inside the square without cropping */
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .two-by-two-grid .media-frame {
+        flex: 1 1 100%;
+        max-width: 100%;
+        aspect-ratio: 1 / 1;
+      }
+    }
+
+    /* --- 3-UP THEN 2-UP GRID LAYOUT --- */
+    .three-row-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .three-row-grid .media-frame {
+      /* Fits exactly 3 items per row on desktop (100% minus two 24px gaps divided by 3) */
+      flex: 0 0 calc((100% - 48px) / 3);
+      max-width: calc((100% - 48px) / 3);
+      min-width: 240px;
+      aspect-ratio: 4 / 3;
+    }
+
+    @media (max-width: 860px) {
+      /* Responsive fallback for smaller screens */
+      .three-row-grid .media-frame {
+        flex: 1 1 240px;
+        max-width: 100%;
+      }
+    }
+
+    /* --- 4-UP THEN 4-UP GRID LAYOUT --- */
+    .four-row-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .four-row-grid .media-frame {
+      /* Fits exactly 3 items per row on desktop (100% minus two 24px gaps divided by 3) */
+      flex: 0 0 calc((100% - 36px) / 4);
+      max-width: calc((100% - 36px) / 4);
+      min-width: 240px;
+      aspect-ratio: 4 / 3;
+    }
+
+    @media (max-width: 860px) {
+      /* Responsive fallback for smaller screens */
+      .four-row-grid .media-frame {
+        flex: 1 1 240px;
+        max-width: 100%;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -415,6 +693,7 @@
   <section class="section">
     <div class="section-inner stack-24">
       <span class="project-top">Business Terms Capability (BTC)</span>
+      <span class="read-time-badge">Estimated: 3-5 min read</span>
       <h1 class="btc-title">Designing the single source of truth for every service's data schema</h1>
 
       <div class="btc-meta">
@@ -457,10 +736,10 @@
     </div>
   </section>
 
-  <!-- DOUBLETEST IMAGE -->
-  <div class="media-full" style="padding-top:40px; padding-bottom:40px;">
-    <div class="" data-label="BTC-doubletest-1.png">
-      <img src="BTC-doubletest-1.png" alt="BTC schema comparison view">
+  <!-- FULL DOUBLE IMAGE -->
+  <div class="media-full first-double-image">
+    <div class="media-frame">
+      <img src="btc-img/btc/BTC-doubletest-2.png" alt="BTC schema comparison view">
     </div>
   </div>
 
@@ -505,16 +784,13 @@
             <p>product teams can drop the MFE into their own host environments with zero adjustments required</p>
           </div>
         </div>
+        <!-- 3 FINAL BTC images -->
+          <div class="media-frame">
+            <img src="btc-img/BTC-final-3.png" alt="Old FICO Business Terms Manager Views">
+          </div>
       </div>
     </div>
   </section>
-
-  <!-- SAMPLE IMAGE -->
-  <div class="media-full" style="padding-top:40px; padding-bottom:40px;">
-    <div class="" data-label="BTC-doubletest-1.png">
-      <img src="BTC-doubletest-1.png" alt="test image">
-    </div>
-  </div>
 
   <!-- PROBLEM -->
   <section class="section">
@@ -534,12 +810,13 @@
     </div>
   </section>
 
-  <!-- SAMPLE IMAGE -->
-  <div class="media-full" style="padding-top:40px; padding-bottom:40px;">
-    <div class="" data-label="BTC-doubletest-1.png">
-      <img src="BTC-doubletest-1.png" alt="test image">
+  <!-- FULL SIZE IMAGE -->
+  <div class="media-full">
+    <div class="media-frame">
+      <img src="btc-img/BTM.png" alt="Old FICO Business Terms Manager Views">
     </div>
   </div>
+
 
   <!-- PROCESS: PHASE 1 -->
   <section class="section roomy">
@@ -571,17 +848,27 @@
     </div>
   </section>
 
-  <!-- MEDIA GRID: PHASE 1 SCREENS -->
-  <div class="media-grid">
-    <div class="media-frame" data-label="Add image: BTC-phase1-01.png"><img src="BTC-phase1-01.png" alt="BTC Phase 1 screen 1"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase1-02.png"><img src="BTC-phase1-02.png" alt="BTC Phase 1 screen 2"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase1-03.png"><img src="BTC-phase1-03.png" alt="BTC Phase 1 screen 3"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase1-04.png"><img src="BTC-phase1-04.png" alt="BTC Phase 1 screen 4"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase1-05.png"><img src="BTC-phase1-05.png" alt="BTC Phase 1 screen 5"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase1-06.png"><img src="BTC-phase1-06.png" alt="BTC Phase 1 screen 6"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase1-07.png"><img src="BTC-phase1-07.png" alt="BTC Phase 1 screen 7"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase1-08.png"><img src="BTC-phase1-08.png" alt="BTC Phase 1 screen 8"></div>
+ <!-- MEDIA GRID: PHASE 1 SCREENS -->
+  <div class="media-grid two-by-two-grid">
+    <!-- EMBEDDED FIGMA -->
+    <div class="figma-container">
+      <div class="figma-frame">
+        <iframe 
+          src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/iBlkk0TphVBocUrHV6WckM/Landing-pages-for-portfolio?node-id=111-435740&viewport=-9512%2C-783%2C0.49&t=9YjejXWM7KFEsFU6-1&scaling=contain&content-scaling=fixed&starting-point-node-id=104%3A434828&page-id=68%3A247307&hide-ui=1"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+        </iframe>
+      </div>
+      <span class="phase-title" style="color:#000; text-align: center; padding-bottom: 48px;">Above: BTC Micro Frontend inside Feature Sets</span>
+    </div>
+
+    <div class="media-grid less-spacing">
+      <div class="media-frame"><img src="btc-img/p1/BTCMFE-FS.png" alt="BTC Phase 1 screen 1"></div>
+      <div class="media-frame"><img src="btc-img/p1/MFE-differentstates.png" alt="BTC Phase 1 screen 1"></div>
+      <div class="media-frame"><img src="btc-img/p1/MFETree-context.png" alt="BTC Phase 1 screen 1"></div>
+      <div class="media-frame"><img src="btc-img/p1/PreviewLAview.png" alt="BTC Phase 1 screen 1"></div>
+    </div>
   </div>
+
 
   <div class="divider-wrap"><div class="divider"></div></div>
 
@@ -597,17 +884,27 @@
     </div>
   </section>
 
+
   <!-- MEDIA GRID: PHASE 2 SCREENS -->
-  <div class="media-grid">
-    <div class="media-frame" data-label="Add image: BTC-phase2-01.png"><img src="BTC-phase2-01.png" alt="BTC Canvas exploration screen 1"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase2-02.png"><img src="BTC-phase2-02.png" alt="BTC Canvas exploration screen 2"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase2-03.png"><img src="BTC-phase2-03.png" alt="BTC Canvas exploration screen 3"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase2-04.png"><img src="BTC-phase2-04.png" alt="BTC Canvas exploration screen 4"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase2-05.png"><img src="BTC-phase2-05.png" alt="BTC Canvas exploration screen 5"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase2-06.png"><img src="BTC-phase2-06.png" alt="BTC Canvas exploration screen 6"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase2-07.png"><img src="BTC-phase2-07.png" alt="BTC Canvas exploration screen 7"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase2-08.png"><img src="BTC-phase2-08.png" alt="BTC Canvas exploration screen 8"></div>
-  </div>
+  <div class="media-grid less-spacing two-by-two-grid">
+      <!-- EMBEDDED FIGMA -->
+      <div class="figma-container">
+        <div class="figma-frame">
+          <iframe 
+            src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/iBlkk0TphVBocUrHV6WckM/Landing-pages-for-portfolio?node-id=182-449979&viewport=-7162%2C-2489%2C0.43&t=NowEw1IdkhhqO4BN-1&scaling=contain&content-scaling=fixed&starting-point-node-id=104%3A434828&page-id=68%3A247307&hide-ui=1"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+          </iframe>
+        </div>
+        <span class="phase-title" style="color:#000; text-align: center; padding-bottom: 48px;">Above: Exploring the Entity Relationship Diagram integrated with the table view.</span>
+      </div>
+
+      <div class="media-grid">
+        <div class="media-frame"><img src="btc-img/p2/P2-BTC-Table.png" alt="BTC Phase 2 Table View"></div>
+        <div class="media-frame"><img src="btc-img/p2/P2-BTC-Graph1.png" alt="BTC Phase 2 Graphical View Default"></div>
+        <div class="media-frame"><img src="btc-img/p2/P2-BTC-Graph2.png" alt="BTC Phase 2 Graphical View Features"></div>
+        <div class="media-frame"><img src="btc-img/p2/P2-BTC-Graph3.png"alt="BTC Phase 2 Graphical View Details of Entity"></div>
+      </div>
+    </div>
 
   <div class="divider-wrap"><div class="divider"></div></div>
 
@@ -617,7 +914,7 @@
       <span class="phase-title" style="color:#000;">Phase 3 — Refining the Table &amp; Continuing the Canvas Exploration</span>
       <div class="stack-24">
         <div class="body-copy">
-          <p>Despite the enthusiasm for canvas, the team made the call to ship the table version only for beta — giving engineering the stability to launch confidently alongside other products releasing in parallel. In parallel, I kept developing the canvas concept.</p>
+          <p>Despite the enthusiasm for canvas, the team made the call to ship the table version only for beta, giving engineering the stability to launch confidently alongside other products releasing in parallel. In parallel, I kept developing the canvas concept.</p>
           <p>This phase focused on:</p>
         </div>
         <ul class="styled">
@@ -632,15 +929,12 @@
 
   <!-- PHASE 3 MEDIA: two-up, full, two-up -->
   <div class="media-row">
-    <div class="media-frame" data-label="Add image: BTC-phase3-01.png"><img src="BTC-phase3-01.png" alt="BTC Phase 3 screen 1"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase3-02.png"><img src="BTC-phase3-02.png" alt="BTC Phase 3 screen 2"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase3-01.png"><img src="BTC-doubletest-1.png" alt="BTC Phase 3 screen 1"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase3-02.png"><img src="btc/BTC-doubletest-2.png" alt="BTC Phase 3 screen 2"></div>
   </div>
-  <div class="media-row">
-    <div class="media-frame" data-label="Add image: BTC-phase3-03.png"><img src="BTC-phase3-03.png" alt="BTC Phase 3 screen 3" style="aspect-ratio:2732/1050;"></div>
-  </div>
-  <div class="media-row">
-    <div class="media-frame" data-label="Add image: BTC-phase3-04.png"><img src="BTC-phase3-04.png" alt="BTC Phase 3 screen 4"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase3-05.png"><img src="BTC-phase3-05.png" alt="BTC Phase 3 screen 5"></div>
+    <div class="media-row">
+    <div class="media-frame" data-label="Add image: BTC-phase3-01.png"><img src="BTC-doubletest-1.png" alt="BTC Phase 3 screen 1"></div>
+    <div class="media-frame" data-label="Add image: BTC-phase3-02.png"><img src="BTC-doubletest-2.png" alt="BTC Phase 3 screen 2"></div>
   </div>
 
   <div class="divider-wrap"><div class="divider"></div></div>
@@ -650,7 +944,7 @@
     <div class="section-inner stack-24">
       <span class="eyebrow">future vision</span>
       <div class="stack-48">
-        <p style="font-size:1.35rem; line-height:1.6; font-weight: 300;">After leaving FICO, I kept developing BTC on my own time, free of technical constraints, to explore where the concept could go next:</p>
+        <p style="font-size:1.35rem; line-height:1.6; font-weight: 300;">After leaving FICO, I went back to designing and exploring other iterations of BTC on my own time, free of technical constraints, exploring where the concept could go next:</p>
         <ul class="styled">
           <li><strong>Scalable navigation &amp; component architecture</strong><span class="li-body"> — re-architected the platform's navigation so switching between Table and Canvas views feels seamless, laying the groundwork for a unified workspace that can grow with the platform</span></li>
           <li><strong>Contextual AI integration</strong><span class="li-body"> — explored an AI system that reads a user's initial data blocks to predict schema intent, proactively suggesting structural autofills and recommendations as they build</span></li>
@@ -662,15 +956,15 @@
     </div>
   </section>
 
-  <!-- CLOSING DOUBLETEST IMAGES -->
-  <div class="media-full" style="padding-top:40px; padding-bottom:40px;">
-    <div class="media-frame" data-label="Add image: BTC-doubletest-2.png" style="aspect-ratio:2732/838;">
-      <img src="BTC-doubletest-2.png" alt="BTC future vision concept 1">
+  <!-- CLOSING DOUBLE IMAGE -->
+  <div class="media-full">
+    <div class="media-frame">
+      <img src="btc/BTC-doubletest-2.png" alt="BTC schema comparison view">
     </div>
   </div>
-  <div class="media-full" style="padding-top:40px; padding-bottom:40px;">
-    <div class="media-frame" data-label="Add image: BTC-doubletest-3.png" style="aspect-ratio:2732/838;">
-      <img src="BTC-doubletest-3.png" alt="BTC future vision concept 2">
+  <div class="media-full">
+    <div class="media-frame">
+      <img src="BTC-doubletest-2.png" alt="BTC schema comparison view">
     </div>
   </div>
 
@@ -727,6 +1021,85 @@
         link.classList.toggle('active', linkPath === currentPath);
       });
     });
+
+    // --- LIGHTBOX INTERACTIVITY FOR PHASE 1 MEDIA GRID ---
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('lightboxModal');
+  const modalImg = document.getElementById('lightboxImg');
+  const closeBtn = document.getElementById('lightboxClose');
+  const prevBtn = document.getElementById('lightboxPrev');
+  const nextBtn = document.getElementById('lightboxNext');
+
+  // Select images specifically inside the Phase 1 media grid
+  const gridFrames = document.querySelectorAll('.media-grid .media-frame');
+  const images = Array.from(gridFrames).map(frame => frame.querySelector('img')).filter(Boolean);
+
+  let currentIndex = 0;
+
+  function openLightbox(index) {
+    currentIndex = index;
+    modalImg.src = images[currentIndex].src;
+    modalImg.alt = images[currentIndex].alt || '';
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden'; // Prevents background scrolling
+  }
+
+  function closeLightbox() {
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % images.length;
+    modalImg.src = images[currentIndex].src;
+    modalImg.alt = images[currentIndex].alt || '';
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    modalImg.src = images[currentIndex].src;
+    modalImg.alt = images[currentIndex].alt || '';
+  }
+
+  gridFrames.forEach((frame, index) => {
+    frame.addEventListener('click', () => openLightbox(index));
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+  nextBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showNext();
+  });
+  prevBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showPrev();
+  });
+
+  // Close when clicking backdrop
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeLightbox();
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') showNext();
+    if (e.key === 'ArrowLeft') showPrev();
+  });
+});
+
   </script>
+
+  <!-- LIGHTBOX MODAL -->
+  <div class="lightbox-modal" id="lightboxModal">
+    <div class="lightbox-content">
+      <button class="lightbox-btn lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+      <button class="lightbox-btn lightbox-prev" id="lightboxPrev" aria-label="Previous">&lsaquo;</button>
+      <img src="" alt="Enlarged view" class="lightbox-img" id="lightboxImg">
+      <button class="lightbox-btn lightbox-next" id="lightboxNext" aria-label="Next">&rsaquo;</button>
+    </div>
+  </div>
+
 </body>
 </html>
