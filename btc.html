@@ -149,8 +149,8 @@
       padding: 0 10px;
     }
     .btc-hero .media-frame {
-      width: 80%;
-      max-height: 80vh;
+      width: 100%;
+      max-height: 90vh;
     }
     .btc-hero img { max-height: 90vh; }
 
@@ -182,7 +182,8 @@
       /*background: #eaeaea;*/
     }
     .media-frame img {
-      width: 100%;
+      width: 50%;
+      margin: auto;
       height: 100%;
       object-fit: cover;
       display: block;
@@ -385,6 +386,17 @@
       letter-spacing: 0.5px;
       display: block;
     }
+
+    .gif-caption {
+      color: #000;
+      text-align: center;
+      margin: 8px auto;
+      font-weight: 300;
+      font-size: 0.75rem;
+      width: 50%;
+      display: block;
+    }
+
     .quote-line {
       font-style: italic;
     }
@@ -418,6 +430,12 @@
 
     .less-spacing {
       padding: 40px 80px !important;
+    }
+
+    .adjust-for-gif {
+      padding: 40px 80px 80px 80px !important;
+      width: 100%;
+      margin: 0 auto;
     }
 
     /* --- LIGHTBOX MODAL STYLES --- */
@@ -578,7 +596,7 @@
     .figma-frame {
       position: relative;
       width: 100%;
-      height: 600px; /* Adjust desktop height as needed */
+      height: 680px; /* Adjust desktop height as needed */
       /*border: 1px solid #E5E5E5;*/
       border-radius: 8px;
       overflow: hidden;
@@ -698,7 +716,7 @@
   <!-- HERO IMAGE -->
   <section class="btc-hero">
     <div class="media-frame">
-      <img src="BTC-ProDisplay-center-75.png" alt="FICO Composition">
+      <img src="BTC-ProDisplay-center.png" alt="FICO Composition">
     </div>
   </section>
 
@@ -862,26 +880,17 @@
   </section>
 
  <!-- MEDIA GRID: PHASE 1 SCREENS -->
-  <div class="media-grid less-spacing two-by-two-grid">
-    <!-- EMBEDDED FIGMA -->
-    <div class="figma-container">
-      <div class="figma-frame">
-          <iframe 
-            src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/iBlkk0TphVBocUrHV6WckM/Landing-pages-for-portfolio?node-id=111-435740&viewport=-1903%2C-482%2C0.15&t=UHLRCFnN7qt72sYD-1&scaling=contain&content-scaling=fixed&starting-point-node-id=104%3A434828&page-id=68%3A247307&hide-ui=1"
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
-          </iframe>
-        </div>
-      <span class="phase-title" style="color:#000; text-align: center; padding-bottom: 48px; margin-top: -24px; font-weight: 300;">Above: BTC Micro Frontend inside Feature Sets</span>
-    </div>
-
-    <div class="media-grid less-spacing">
-      <div class="media-frame"><img src="btc-img/p1/BTCMFE-FS.png" alt="BTC Phase 1 screen 1"></div>
-      <div class="media-frame"><img src="btc-img/p1/MFE-differentstates.png" alt="BTC Phase 1 screen 1"></div>
-      <div class="media-frame"><img src="btc-img/p1/MFETree-context.png" alt="BTC Phase 1 screen 1"></div>
-      <div class="media-frame"><img src="btc-img/p1/PreviewLAview.png" alt="BTC Phase 1 screen 1"></div>
-    </div>
+  <div class="media-frame adjust-for-gif">
+    <img src="btc-img/p1/MFE-in-context.gif" alt="BTC micro-frontend inside Feature Set Capability">
+    <span class="gif-caption">BTC micro-frontend inside Feature Set Capability</span>
   </div>
 
+  <div class="media-grid less-spacing two-by-two-grid">
+    <div class="media-frame"><img src="btc-img/p1/BTCMFE-FS.png" alt="BTC Phase 1 screen 1"></div>
+    <div class="media-frame"><img src="btc-img/p1/MFE-differentstates.png" alt="BTC Phase 1 screen 1"></div>
+    <div class="media-frame"><img src="btc-img/p1/MFETree-context.png" alt="BTC Phase 1 screen 1"></div>
+    <div class="media-frame"><img src="btc-img/p1/PreviewLAview.png" alt="BTC Phase 1 screen 1"></div>
+  </div>
 
   <div class="divider-wrap"><div class="divider"></div></div>
 
@@ -898,25 +907,18 @@
   </section>
 
   <!-- MEDIA GRID: PHASE 2 SCREENS -->
-  <div class="media-grid less-spacing two-by-two-grid">
-      <!-- EMBEDDED FIGMA -->
-      <div class="figma-container">
-        <div class="figma-frame">
-          <iframe 
-            src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/iBlkk0TphVBocUrHV6WckM/Landing-pages-for-portfolio?node-id=182-449979&viewport=-7162%2C-2489%2C0.43&t=NowEw1IdkhhqO4BN-1&scaling=contain&content-scaling=fixed&starting-point-node-id=104%3A434828&page-id=68%3A247307&hide-ui=1"
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
-          </iframe>
-        </div>
-        <span class="phase-title" style="color:#000; text-align: center; padding-bottom: 48px; margin-top: -24px; font-weight: 300;">Above: Exploring the Entity Relationship Diagram integrated with the table view.</span>
-      </div>
-
-      <div class="media-grid less-spacing">
-        <div class="media-frame"><img src="btc-img/p2/P2-BTC-Table.png" alt="BTC Phase 2 Table View"></div>
-        <div class="media-frame"><img src="btc-img/p2/P2-BTC-Table2.png" alt="BTC Phase 2 Graphical View Default"></div>
-        <div class="media-frame"><img src="btc-img/p2/P2-BTC-Graph2.png" alt="BTC Phase 2 Graphical View Features"></div>
-        <div class="media-frame"><img src="btc-img/p2/P2-BTC-Graph3.png"alt="BTC Phase 2 Graphical View Details of Entity"></div>
-      </div>
+    <div class="media-frame adjust-for-gif">
+      <img src="btc-img/p2/p2-canvas.gif" alt="BTC schema comparison view">
+      <span class="gif-caption">Exploring the Entity Relationship Diagram combined with the table view</span>
     </div>
+
+  <div class="media-grid less-spacing two-by-two-grid">
+    <div class="media-frame"><img src="btc-img/p2/P2-BTC-Table.png" alt="BTC Phase 2 Table View"></div>
+    <div class="media-frame"><img src="btc-img/p2/P2-BTC-Table2.png" alt="BTC Phase 2 Graphical View Default"></div>
+    <div class="media-frame"><img src="btc-img/p2/P2-BTC-Graph2.png" alt="BTC Phase 2 Graphical View Features"></div>
+    <div class="media-frame"><img src="btc-img/p2/P2-BTC-Graph3.png"alt="BTC Phase 2 Graphical View Details of Entity"></div>
+  </div>
+</div>
 
   <div class="divider-wrap"><div class="divider"></div></div>
 
@@ -939,15 +941,31 @@
     </div>
   </section>
 
-  <!-- PHASE 3 MEDIA: two-up, full, two-up -->
-  <div class="media-row">
-    <div class="media-frame" data-label="Add image: BTC-phase3-01.png"><img src="BTC-doubletest-1.png" alt="BTC Phase 3 screen 1"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase3-02.png"><img src="btc-img/BTC-doubletest-2.png" alt="BTC Phase 3 screen 2"></div>
+  <!-- MEDIA GRID: PHASE 3 SCREENS -->
+  <div class="media-frame adjust-for-gif">
+    <img src="btc-img/p3/FW25-BTC.gif" alt="BTC schema comparison view">
+    <span class="gif-caption">Glimpse of BTC integration with Feature Aggregation that was present at FICO World 2025 at the Innovation Center</span>
   </div>
-    <div class="media-row">
-    <div class="media-frame" data-label="Add image: BTC-phase3-01.png"><img src="BTC-doubletest-1.png" alt="BTC Phase 3 screen 1"></div>
-    <div class="media-frame" data-label="Add image: BTC-phase3-02.png"><img src="btc-img/BTC-doubletest-2.png" alt="BTC Phase 3 screen 2"></div>
+  
+
+  <div class="media-grid less-spacing three-row-grid ">
+      <!-- EMBEDDED FIGMA -->
+      <div class="figma-container">
+        <div class="figma-frame">
+          <iframe 
+            src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/WIu1IJAGllJmDpcI13H0XA/BTC---april-aug-2025--Interactions-?node-id=33-97076&viewport=372%2C588%2C0.07&t=KctvH4fXY2ABsDPJ-1&scaling=contain&content-scaling=fixed&starting-point-node-id=33%3A97076&page-id=0%3A1&hide-ui=1"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+          </iframe>
+        </div>
+        <span class="gif-caption">BTC Prototype</span>
+      </div>
+
+<!--     <div class="media-frame">
+      <img src="btc-img/BTC-doubletest-2.png" alt="BTC schema comparison view">
+    </div> -->
+
   </div>
+
 
   <div class="divider-wrap"><div class="divider"></div></div>
 
@@ -968,17 +986,55 @@
     </div>
   </section>
 
+  <!-- MEDIA GRID: PHASE 3 SCREENS -->
+  <div class="media-grid less-spacing two-by-two-grid">
+      <!-- EMBEDDED FIGMA -->
+      <div class="figma-container">
+        <div class="figma-frame">
+          <iframe 
+            src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/TgdZntzJXwQjUzFhPExyDF/BTC-2026---added-interactions?node-id=2-228852&viewport=196%2C742%2C0.12&t=oals6KVcOmtRgbE1-1&scaling=contain&content-scaling=fixed&starting-point-node-id=2%3A264416&page-id=0%3A1&hide-ui=1"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+          </iframe>
+        </div>
+        <span class="gif-caption">Post-FICO BTC Prototype </span>
+      </div>
+    </div>
+
+
   <!-- CLOSING DOUBLE IMAGE -->
-  <div class="media-full">
+  <div class="media-full" style="padding-top: 80px;">
     <div class="media-frame">
-      <img src="btc-img/BTC-doubletest-2.png" alt="BTC schema comparison view">
+      <img src="btc-img/fullimg-mytake/BTC 1.png" alt="BTC schema comparison view">
+    </div>
+    <div class="media-frame">
+      <img src="btc-img/fullimg-mytake/BTC 2.png" alt="BTC schema comparison view">
     </div>
   </div>
   <div class="media-full">
     <div class="media-frame">
-      <img src="btc-img/BTC-doubletest-2.png" alt="BTC schema comparison view">
+      <img src="btc-img/fullimg-mytake/BTC 8.png" alt="BTC schema comparison view">
+    </div>
+    <div class="media-frame">
+      <img src="btc-img/fullimg-mytake/BTC 6.png" alt="BTC schema comparison view">
     </div>
   </div>
+  <div class="media-full">
+    <div class="media-frame">
+      <img src="btc-img/fullimg-mytake/BTC 7.png" alt="BTC schema comparison view">
+    </div>
+    <div class="media-frame">
+      <img src="btc-img/fullimg-mytake/BTC 3.png" alt="BTC schema comparison view">
+    </div>
+  </div>
+  <div class="media-full" style="padding-bottom: 80px;">
+    <div class="media-frame">
+      <img src="btc-img/fullimg-mytake/BTC 5.png" alt="BTC schema comparison view">
+    </div>
+    <div class="media-frame">
+      <img src="btc-img/fullimg-mytake/BTC 4.png" alt="BTC schema comparison view">
+    </div>
+  </div>
+  
 
   <!-- FIXED GREEN BOTTOM BAR -->
   <div class="bottom-bar"></div>
