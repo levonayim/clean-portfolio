@@ -174,12 +174,12 @@
       align-items: center;
     }
 
-    /* --- IMAGE PLACEHOLDER SYSTEM --- */
+    /* --- IMAGE PLACEHOLDER SYSTEM (ORIGINAL DESKTOP) --- */
     .media-frame {
       position: relative;
       width: 100%;
       overflow: hidden;
-      /*background: #eaeaea;*/
+      cursor: pointer;
     }
     .media-frame img {
       width: 50%;
@@ -188,9 +188,6 @@
       object-fit: cover;
       display: block;
       transition: transform 0.2s ease;
-    }
-    .media-frame {
-      cursor: pointer;
     }
     .media-frame:hover img {
       transform: scale(1.02);
@@ -379,6 +376,10 @@
       line-height: 1.5;
     }
 
+    .triple-image img{
+      width: 100% !important;
+    }
+
     /* --- PROCESS PHASES --- */
     .phase-title {
       font-weight: 700;
@@ -405,7 +406,7 @@
     .media-grid {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center; /* Centers items in the last row */
+      justify-content: center;
       gap: 24px;
       padding: var(--side-pad);
       background: #fff;
@@ -421,6 +422,8 @@
     }
 
     .media-grid .media-frame img {
+      width: 100%;
+      height: 100%;
       transition: transform 0.2s ease;
     }
 
@@ -513,12 +516,6 @@
       right: -70px;
     }
 
-    @media (max-width: 768px) {
-      .lightbox-prev { left: 10px; }
-      .lightbox-next { right: 10px; }
-      .lightbox-close { top: 10px; right: 10px; }
-    }
-
     .media-row {
       display: flex;
       gap: 24px;
@@ -526,10 +523,8 @@
       flex-wrap: wrap;
     }
 
-
-    /* --- FULL-WIDTH MEDIA CONTAINER --- */
+    /* --- FULL-WIDTH MEDIA CONTAINER (ORIGINAL DESKTOP SPEC) --- */
     .media-full {
-      /*padding: 0 var(--side-pad);*/
       padding: 1rem 0;
       background: var(--bg-soft);
       display: flex;
@@ -541,7 +536,6 @@
       background: rgba(99, 149, 428, 0.1) !important;
     }
 
-    /* Ensure the wrapper centers and doesn't exceed 840px */
     .media-full .media-frame {
       width: 100%;
       max-height: 840px;
@@ -550,40 +544,10 @@
       align-items: center;
     }
 
-    /* Constrain the image while keeping proportions responsive */
     .media-full .media-frame img {
       width: 90%;
       height: auto;
       max-height: 840px;
-      /*object-fit: contain;*/
-    }
-    /*.media-full .media-frame { aspect-ratio: 2732 / 2048; }*/
-
-    @media (max-width: 768px) {
-      .btc-hero .media-frame { width: 100%; }
-      .btc-meta { flex-direction: column; }
-      .impact-grid { flex-direction: column; }
-      .section { padding-left: 24px; padding-right: 24px; }
-      .section.roomy { padding-top: 80px; padding-bottom: 80px; }
-      .section.roomiest { padding-top: 100px; padding-bottom: 100px; }
-      .section.tight { padding-top: 56px; padding-bottom: 56px; }
-      .media-row { flex-direction: column; }
-      .tldr-box { padding: 20px; }
-      .divider-wrap { padding: 80px 0 40px 0; }
-      ul.styled, ol.styled { gap: 1.25rem; padding-left: 28px; }
-    }
-
-    @media (max-width: 480px) {
-      nav {
-        gap: 10px;
-        padding: 10px 16px;
-      }
-      nav a {
-        font-size: 0.72rem;
-        letter-spacing: 0.5px;
-      }
-      .btc-title { margin-bottom: 40px; }
-      .btc-meta { margin-bottom: 40px; }
     }
 
     /* --- FIGMA EMBED WRAPPER --- */
@@ -596,11 +560,9 @@
     .figma-frame {
       position: relative;
       width: 100%;
-      height: 680px; /* Adjust desktop height as needed */
-      /*border: 1px solid #E5E5E5;*/
+      height: 680px;
       border-radius: 8px;
       overflow: hidden;
-      /*background: var(--bg-soft);*/
     }
 
     .figma-frame iframe {
@@ -609,27 +571,19 @@
       border: none;
     }
 
-    @media (max-width: 768px) {
-      .figma-frame {
-        height: 400px; /* Scaled-down height for mobile */
-      }
-    }
-
     /* --- 2x2 SQUARE GRID LAYOUT --- */
     .two-by-two-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 24px; /* 24px gap between rows and columns */
+      gap: 24px;
     }
 
     .two-by-two-grid .media-frame {
-/*      flex: 0 0 calc((100% - 24px) / 2);
-      max-width: calc((100% - 24px) / 2);*/
       min-width: 280px;
-      aspect-ratio: 2 / 1; /* Forces square ratio */
-      background-color: #F5F5F5; /* Soft light gray background */
-      max-height: calc(100vw * 0.35 - 6rem); /* Reduces height by 100px */
+      aspect-ratio: 2 / 1;
+      background-color: #F5F5F5;
+      max-height: calc(100vw * 0.35 - 6rem);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -639,16 +593,8 @@
     .two-by-two-grid .media-frame img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Keeps full image visible inside the square without cropping */
+      object-fit: contain;
       display: block;
-    }
-
-    @media (max-width: 768px) {
-      .two-by-two-grid .media-frame {
-        flex: 1 1 100%;
-        max-width: 100%;
-        aspect-ratio: 1 / 1;
-      }
     }
 
     /* --- 3-UP THEN 2-UP GRID LAYOUT --- */
@@ -660,19 +606,10 @@
     }
 
     .three-row-grid .media-frame {
-      /* Fits exactly 3 items per row on desktop (100% minus two 24px gaps divided by 3) */
       flex: 0 0 calc((100% - 48px) / 3);
       max-width: calc((100% - 48px) / 3);
       min-width: 240px;
       aspect-ratio: 4 / 3;
-    }
-
-    @media (max-width: 860px) {
-      /* Responsive fallback for smaller screens */
-      .three-row-grid .media-frame {
-        flex: 1 1 240px;
-        max-width: 100%;
-      }
     }
 
     /* --- 4-UP THEN 4-UP GRID LAYOUT --- */
@@ -684,21 +621,137 @@
     }
 
     .four-row-grid .media-frame {
-      /* Fits exactly 3 items per row on desktop (100% minus two 24px gaps divided by 3) */
       flex: 0 0 calc((100% - 36px) / 4);
       max-width: calc((100% - 36px) / 4);
       min-width: 240px;
       aspect-ratio: 4 / 3;
     }
 
-    @media (max-width: 860px) {
-      /* Responsive fallback for smaller screens */
-      .four-row-grid .media-frame {
-        flex: 1 1 240px;
-        max-width: 100%;
+    /* ==========================================================
+       RESPONSIVE BREAKPOINTS (TABLET, MOBILE & VERY LARGE SCREENS)
+       ========================================================== */
+
+    /* --- VERY LARGE / ULTRA-WIDE SCREENS (> 1600px) --- */
+    @media (min-width: 1600px) {
+      :root {
+        --side-pad: clamp(120px, 15vw, 450px);
+      }
+      .media-full .media-frame img {
+        width: 80%;
+        max-height: 900px;
       }
     }
 
+    /* --- TABLET BREAKPOINT (769px to 1024px) --- */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      :root {
+        --side-pad: 48px;
+      }
+      .section { padding-left: 48px; padding-right: 48px; }
+      .less-spacing, .adjust-for-gif { padding: 40px !important; }
+      
+      .media-full {
+        flex-direction: row;
+        gap: 16px;
+      }
+      .media-full .media-frame img {
+        width: 95%;
+      }
+
+      .two-by-two-grid .media-frame {
+        flex: 1 1 calc(50% - 24px);
+        max-height: 320px;
+      }
+
+      .figma-frame {
+        height: 520px;
+      }
+    }
+
+    /* --- MOBILE BREAKPOINT (< 768px) --- */
+    @media (max-width: 768px) {
+      .btc-hero .media-frame { width: 100%; }
+      .btc-hero .media-frame img { width: 100%; }
+      .btc-meta { flex-direction: column; }
+      .impact-grid { flex-direction: column; gap: 20px;}
+      .section { padding-left: 20px; padding-right: 20px; }
+      .section.roomy { padding-top: 60px; padding-bottom: 60px; }
+      .section.roomiest { padding-top: 48x; padding-bottom: px; }
+      .section.tight { padding-top: 48px; padding-bottom: 48px; }
+      .media-row { flex-direction: column; }
+      .tldr-box { padding: 20px; }
+      .divider-wrap { padding: 60px 0 30px 0; }
+      ul.styled, ol.styled { gap: 1.25rem; padding-left: 20px; }
+      .impact-item { flex: 1 1 80px;}
+
+      /* Mobile Image Stacking & Frame Resizing */
+      .media-frame img {
+        width: 100%;
+      }
+
+      .media-full {
+        flex-direction: column;
+        padding: 24px 16px;
+        gap: 20px;
+      }
+
+      .media-full .media-frame img {
+        width: 100%;
+        max-height: none;
+      }
+
+      .section.on-blue {
+        background: var(--accent);
+        color: #fff;
+        padding-top: 64px;
+        padding-bottom: 64px;
+      }
+
+      .less-spacing, .adjust-for-gif {
+        padding: 24px 16px !important;
+      }
+
+      .gif-caption {
+        width: 90%;
+        font-size: 0.8rem;
+      }
+
+      .figma-frame {
+        height: 400px;
+      }
+
+      .two-by-two-grid .media-frame {
+        flex: 1 1 100%;
+        max-width: 100%;
+        aspect-ratio: 16 / 9;
+        max-height: none;
+      }
+
+      .three-row-grid .media-frame,
+      .four-row-grid .media-frame {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+
+      /* Lightbox Mobile Adjustments */
+      .lightbox-prev { left: 10px; }
+      .lightbox-next { right: 10px; }
+      .lightbox-close { top: 10px; right: 10px; }
+    }
+
+    /* --- SMALL MOBILE (< 480px) --- */
+    @media (max-width: 480px) {
+      nav {
+        gap: 10px;
+        padding: 10px 16px;
+      }
+      nav a {
+        font-size: 0.72rem;
+        letter-spacing: 0.5px;
+      }
+      .btc-title { margin-bottom: 36px; }
+      .btc-meta { margin-bottom: 36px; }
+    }
   </style>
 </head>
 <body>
@@ -815,10 +868,9 @@
             <p>product teams can drop the MFE into their own host environments with zero adjustments required</p>
           </div>
         </div>
-        <!-- 3 FINAL BTC images -->
-          <div class="media-frame">
-            <img src="btc-img/BTC-final-3.png" alt="Old FICO Business Terms Manager Views">
-          </div>
+        <div class="media-frame triple-image">
+          <img src="btc-img/BTC-final-3.png" alt="Old FICO Business Terms Manager Views">
+        </div>
       </div>
     </div>
   </section>
@@ -847,7 +899,6 @@
       <img src="btc-img/BTM.png" alt="Old FICO Business Terms Manager Views">
     </div>
   </div>
-
 
   <!-- PROCESS: PHASE 1 -->
   <section class="section roomy">
@@ -907,18 +958,17 @@
   </section>
 
   <!-- MEDIA GRID: PHASE 2 SCREENS -->
-    <div class="media-frame adjust-for-gif">
-      <img src="btc-img/p2/p2-canvas.gif" alt="BTC schema comparison view">
-      <span class="gif-caption">Exploring the Entity Relationship Diagram combined with the table view</span>
-    </div>
+  <div class="media-frame adjust-for-gif">
+    <img src="btc-img/p2/p2-canvas.gif" alt="BTC schema comparison view">
+    <span class="gif-caption">Exploring the Entity Relationship Diagram combined with the table view</span>
+  </div>
 
   <div class="media-grid less-spacing two-by-two-grid">
     <div class="media-frame"><img src="btc-img/p2/P2-BTC-Table.png" alt="BTC Phase 2 Table View"></div>
     <div class="media-frame"><img src="btc-img/p2/P2-BTC-Table2.png" alt="BTC Phase 2 Graphical View Default"></div>
     <div class="media-frame"><img src="btc-img/p2/P2-BTC-Graph2.png" alt="BTC Phase 2 Graphical View Features"></div>
-    <div class="media-frame"><img src="btc-img/p2/P2-BTC-Graph3.png"alt="BTC Phase 2 Graphical View Details of Entity"></div>
+    <div class="media-frame"><img src="btc-img/p2/P2-BTC-Graph3.png" alt="BTC Phase 2 Graphical View Details of Entity"></div>
   </div>
-</div>
 
   <div class="divider-wrap"><div class="divider"></div></div>
 
@@ -946,26 +996,18 @@
     <img src="btc-img/p3/FW25-BTC.gif" alt="BTC schema comparison view">
     <span class="gif-caption">Glimpse of BTC integration with Feature Aggregation that was present at FICO World 2025 at the Innovation Center</span>
   </div>
-  
 
-  <div class="media-grid less-spacing three-row-grid ">
-      <!-- EMBEDDED FIGMA -->
-      <div class="figma-container">
-        <div class="figma-frame">
-          <iframe 
-            src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/WIu1IJAGllJmDpcI13H0XA/BTC---april-aug-2025--Interactions-?node-id=33-97076&viewport=372%2C588%2C0.07&t=KctvH4fXY2ABsDPJ-1&scaling=contain&content-scaling=fixed&starting-point-node-id=33%3A97076&page-id=0%3A1&hide-ui=1"
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
-          </iframe>
-        </div>
-        <span class="gif-caption">BTC Prototype</span>
+  <div class="media-grid less-spacing three-row-grid">
+    <div class="figma-container">
+      <div class="figma-frame">
+        <iframe 
+          src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/WIu1IJAGllJmDpcI13H0XA/BTC---april-aug-2025--Interactions-?node-id=33-97076&viewport=372%2C588%2C0.07&t=KctvH4fXY2ABsDPJ-1&scaling=contain&content-scaling=fixed&starting-point-node-id=33%3A97076&page-id=0%3A1&hide-ui=1"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+        </iframe>
       </div>
-
-<!--     <div class="media-frame">
-      <img src="btc-img/BTC-doubletest-2.png" alt="BTC schema comparison view">
-    </div> -->
-
+      <span class="gif-caption">BTC Prototype</span>
+    </div>
   </div>
-
 
   <div class="divider-wrap"><div class="divider"></div></div>
 
@@ -988,20 +1030,18 @@
 
   <!-- MEDIA GRID: PHASE 3 SCREENS -->
   <div class="media-grid less-spacing two-by-two-grid">
-      <!-- EMBEDDED FIGMA -->
-      <div class="figma-container">
-        <div class="figma-frame">
-          <iframe 
-            src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/TgdZntzJXwQjUzFhPExyDF/BTC-2026---added-interactions?node-id=2-228852&viewport=196%2C742%2C0.12&t=oals6KVcOmtRgbE1-1&scaling=contain&content-scaling=fixed&starting-point-node-id=2%3A264416&page-id=0%3A1&hide-ui=1"
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
-          </iframe>
-        </div>
-        <span class="gif-caption">Post-FICO BTC Prototype </span>
+    <div class="figma-container">
+      <div class="figma-frame">
+        <iframe 
+          src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/TgdZntzJXwQjUzFhPExyDF/BTC-2026---added-interactions?node-id=2-228852&viewport=196%2C742%2C0.12&t=oals6KVcOmtRgbE1-1&scaling=contain&content-scaling=fixed&starting-point-node-id=2%3A264416&page-id=0%3A1&hide-ui=1"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+        </iframe>
       </div>
+      <span class="gif-caption">Post-FICO BTC Prototype </span>
     </div>
+  </div>
 
-
-  <!-- CLOSING DOUBLE IMAGE -->
+  <!-- CLOSING DOUBLE IMAGES -->
   <div class="media-full" style="padding-top: 80px;">
     <div class="media-frame">
       <img src="btc-img/fullimg-mytake/BTC 1.png" alt="BTC schema comparison view">
@@ -1034,7 +1074,6 @@
       <img src="btc-img/fullimg-mytake/BTC 4.png" alt="BTC schema comparison view">
     </div>
   </div>
-  
 
   <!-- FIXED GREEN BOTTOM BAR -->
   <div class="bottom-bar"></div>
@@ -1048,14 +1087,14 @@
   </div>
 
   <script>
-    // Show a friendly placeholder for any image not yet added to the project folder
+    // Show placeholder for broken/missing images
     document.querySelectorAll('.media-frame img').forEach(img => {
       img.addEventListener('error', () => {
         img.closest('.media-frame').classList.add('img-missing');
       }, { once: true });
     });
 
-    // Scroll progress bar — fills as the user scrolls toward the bottom
+    // Scroll progress bar
     const scrollProgressBar = document.getElementById('scrollProgressBar');
     function updateScrollProgress() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -1067,7 +1106,7 @@
     window.addEventListener('resize', updateScrollProgress);
     updateScrollProgress();
 
-    // Page transition nav handler (shared with site)
+    // Navigation link transitions
     const navLinks = document.querySelectorAll('.nav-link');
     const overlay = document.getElementById('overlay');
 
@@ -1081,7 +1120,7 @@
       });
     });
 
-    // Highlight active nav link based on current page URL
+    // Active state toggling
     document.addEventListener('DOMContentLoaded', () => {
       const currentPath = window.location.pathname.split('/').pop() || 'btc.html';
       document.querySelectorAll('nav a').forEach(link => {
@@ -1091,77 +1130,71 @@
     });
 
     // --- LIGHTBOX INTERACTIVITY FOR ALL MEDIA-FRAME IMAGES ON THE PAGE ---
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('lightboxModal');
-  const modalImg = document.getElementById('lightboxImg');
-  const closeBtn = document.getElementById('lightboxClose');
-  const prevBtn = document.getElementById('lightboxPrev');
-  const nextBtn = document.getElementById('lightboxNext');
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('lightboxModal');
+      const modalImg = document.getElementById('lightboxImg');
+      const closeBtn = document.getElementById('lightboxClose');
+      const prevBtn = document.getElementById('lightboxPrev');
+      const nextBtn = document.getElementById('lightboxNext');
 
-  // Select every media-frame on the page that actually contains an <img>
-  // (covers the hero, media-grid, media-row, and media-full images alike)
-  const gridFrames = Array.from(document.querySelectorAll('.media-frame')).filter(frame => frame.querySelector('img'));
-  const images = gridFrames.map(frame => frame.querySelector('img'));
+      const gridFrames = Array.from(document.querySelectorAll('.media-frame')).filter(frame => frame.querySelector('img'));
+      const images = gridFrames.map(frame => frame.querySelector('img'));
 
-  let currentIndex = 0;
+      let currentIndex = 0;
 
-  function openLightbox(index) {
-    currentIndex = index;
-    modalImg.src = images[currentIndex].src;
-    modalImg.alt = images[currentIndex].alt || '';
-    modal.classList.add('is-open');
-    document.body.style.overflow = 'hidden'; // Prevents background scrolling
-  }
+      function openLightbox(index) {
+        currentIndex = index;
+        modalImg.src = images[currentIndex].src;
+        modalImg.alt = images[currentIndex].alt || '';
+        modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
 
-  function closeLightbox() {
-    modal.classList.remove('is-open');
-    document.body.style.overflow = '';
-  }
+      function closeLightbox() {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
 
-  function showNext() {
-    currentIndex = (currentIndex + 1) % images.length;
-    modalImg.src = images[currentIndex].src;
-    modalImg.alt = images[currentIndex].alt || '';
-  }
+      function showNext() {
+        currentIndex = (currentIndex + 1) % images.length;
+        modalImg.src = images[currentIndex].src;
+        modalImg.alt = images[currentIndex].alt || '';
+      }
 
-  function showPrev() {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    modalImg.src = images[currentIndex].src;
-    modalImg.alt = images[currentIndex].alt || '';
-  }
+      function showPrev() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        modalImg.src = images[currentIndex].src;
+        modalImg.alt = images[currentIndex].alt || '';
+      }
 
-  gridFrames.forEach((frame, index) => {
-    frame.addEventListener('click', () => {
-      // Skip placeholder frames whose image failed to load
-      if (frame.classList.contains('img-missing')) return;
-      openLightbox(index);
+      gridFrames.forEach((frame, index) => {
+        frame.addEventListener('click', () => {
+          if (frame.classList.contains('img-missing')) return;
+          openLightbox(index);
+        });
+      });
+
+      closeBtn.addEventListener('click', closeLightbox);
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showNext();
+      });
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showPrev();
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeLightbox();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('is-open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') showNext();
+        if (e.key === 'ArrowLeft') showPrev();
+      });
     });
-  });
-
-  closeBtn.addEventListener('click', closeLightbox);
-  nextBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    showNext();
-  });
-  prevBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    showPrev();
-  });
-
-  // Close when clicking backdrop
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeLightbox();
-  });
-
-  // Keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    if (!modal.classList.contains('is-open')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowRight') showNext();
-    if (e.key === 'ArrowLeft') showPrev();
-  });
-});
-
   </script>
 
   <!-- LIGHTBOX MODAL -->
