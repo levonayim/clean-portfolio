@@ -18,6 +18,18 @@
     scroll-behavior: smooth;
   }
 
+  :root {
+    --green: #15521F;
+    --accent: #0251FD;
+    --bg-soft: #f5f5f5;
+    --bg-soft-2: #f7f7f7;
+    --text-main: #111111;
+    --text-muted: #666666;
+    --content-w: 720px;
+    --wide-w: 1320px;
+    --side-pad: clamp(24px, 8vw, 395px);
+  }
+
   body {
     background-color: #FAFAFA;
     min-height: 100vh;
@@ -361,6 +373,11 @@
       max-height: none;
       object-fit: cover;
     }
+    /* Footer Mobile Stack */
+
+      .footer-section {
+        padding: 60px 20px 100px 20px;
+      }
   }
 
   @media (max-width: 480px) {
@@ -465,13 +482,13 @@
     font-weight: 600;
     font-size: 1rem;
     transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-  }
+    }
 
-  .email-btn:hover {
-    background-color: var(--green);
-    color: #ffffff;
-    transform: translateY(-2px);
-  }
+    .email-btn:hover {
+      background-color: var(--green);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
 
   @media (min-width: 1600px) {
       :root {
@@ -553,15 +570,15 @@
       <!-- Project 3 right-->
       <a href="#" class="project-card">
         <div class="card-image-wrapper">
-          <img src="test-platform.png" alt="FICO Platform Cover">
+          <img src="platform-landingpage1.png" alt="FICO Platform Cover">
         </div>
         <div class="card-info">
           <div class="card-header-row">
-            <h3 class="card-title">FICO | Platform</h3>
-            <p class="card-category">B2B &#8226; enterprise platform &#8226; 2024</p>
+            <h3 class="card-title">FICO | Platform Analogy</h3>
+            <p class="card-category">Team alignment &#8226; enterprise platform &#8226; 2024</p>
           </div>
           <p class="card-description">
-            Enterprise B2B platform turning complex logic into unlimited service configurations.
+            Self-initiated a cross-team alignment project to simplify adoption of the new platform vision.
           </p>
         </div>
       </a>
@@ -621,7 +638,7 @@
   <footer class="footer-section">
     <div class="footer-inner">
       <div class="contact-cta">
-        <h3>Interested in collaborating?</h3>
+        <h3>Let's Connect</h3>
         <a href="mailto:levona.yim@gmail.com" class="email-btn">
           <span>Say Hello!</span>
           <span class="material-symbols-outlined" style="font-size:18px;">mail</span>

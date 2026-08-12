@@ -955,6 +955,42 @@
       .btc-title { margin-bottom: 36px; }
       .btc-meta { margin-bottom: 36px; }
     }
+
+    /* --- BACK TO TOP BUTTON --- */
+    #backToTopBtn {
+      position: fixed;
+      bottom: 32px; /* Clears the 12px bottom bar */
+      right: 28px;
+      z-index: 1001; /* Places it above page content and scroll progress bar */
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background-color: var(--green);
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      
+      /* Hidden state */
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, background-color 0.2s ease;
+    }
+
+    #backToTopBtn.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    #backToTopBtn:hover {
+      background-color: var(--accent-darker, #114218); /* Adjusts on hover */
+      transform: translateY(-2px);
+    }
   </style>
 </head>
 <body>
@@ -1298,17 +1334,16 @@
       </div>
     </div>
   </section>
-  
-  <div class="media-grid less-spacing three-row-grid">
-    <div class="figma-container">
-      <div class="figma-frame">
-        <iframe 
-          src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/WIu1IJAGllJmDpcI13H0XA/BTC---april-aug-2025--Interactions-?node-id=33-97076&viewport=372%2C588%2C0.07&t=KctvH4fXY2ABsDPJ-1&scaling=contain&content-scaling=fixed&starting-point-node-id=33%3A97076&page-id=0%3A1&hide-ui=1"
-          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
-        </iframe>
-      </div>
-      
-    </div>
+
+
+  <div class="backstory-title" style="padding:80px 0 40px 0;">
+  <h3>Final Provisioning Flow</h3>
+  </div>
+
+  <!-- MEDIA GRID: PHASE 1 SCREENS -->
+  <div class="media-frame adjust-for-gif">
+    <img src="eg/provisioningflow.gif" alt="">
+    <span class="gif-caption">Flow for Client Admin</span>
   </div>
 
   <div class="divider-wrap"><div class="divider"></div></div>
@@ -1316,37 +1351,32 @@
   <!-- CLOSING DOUBLE IMAGES -->
   <div class="media-full" style="padding-top: 80px;">
     <div class="media-frame">
-      <span class="phase-title">Variation of Final Landing Page Designs</span>
+      <span class="phase-title">Post-FICO Variation of Final Landing Page Designs</span>
     </div>
   </div>
 
   <div class="media-full">
     <div class="media-frame">
-      <img src="eg/BA-1.png" alt="Business Analyst V1 Landing page">
+      <img src="eg/Latest-aug2026-EG-1.png" alt="Business Analyst Landing page">
     </div>
     <div class="media-frame">
-      <img src="eg/BA-2.png" alt="Business Analyst V2 Landing page">
-    </div>
-  </div>
-
-  <div class="media-full">
-    <div class="media-frame">
-      <img src="eg/Service-Creator-1.png" alt="Service Creator V1 Landing page">
-    </div>
-    <div class="media-frame">
-      <img src="eg/Service-Creator-2.png" alt="Service Creator V2 Landing page">
+      <img src="eg/Service-Creator-2.png" alt="Service Creator Landing page">
     </div>
   </div>
 
   <div class="media-full" style="padding-bottom: 80px;">
     <div class="media-frame">
-      <img src="eg/Admin-Landing.jpg" alt="Admin V2 Landing page">
+      <img src="eg/SolutionCreatorAug2026.png" alt="Solution Creator Landing page">
     </div>
     <div class="media-frame">
       <img src="eg/Landing-page-Admin.png" alt="Admin V1 Landing page">
     </div>
   </div>
 
+  <!-- BUTTON TO GO BACK TO TOP -->
+  <button id="backToTopBtn" aria-label="Back to Top">
+    <span class="material-symbols-outlined">arrow_upward</span>
+  </button>
 
   <!-- FOOTER: MORE OF MY WORK & GET IN TOUCH -->
   <footer class="footer-section">
@@ -1368,17 +1398,17 @@
         <!-- Project 2 Card -->
         <a href="" class="work-card nav-link">
           <div class="card-media">
-            <img src="test-platform.png" alt="Project 2 Cover">
+            <img src="platform-landingpage1.png" alt="Project 2 Cover">
           </div>
           <div class="work-card-info">
-            <span class="work-card-title">Feature Aggregation Capability</span>
-            <span class="work-card-subtitle">FICO Platform — Real-time data streaming & modeling</span>
+            <span class="work-card-title">FICO Platform Analogy</span>
+            <span class="work-card-subtitle">Self-initiated a cross-team alignment project to simplify adoption of the new platform vision.</span>
           </div>
         </a>
       </div>
 
       <div class="contact-cta">
-        <h3>Interested in collaborating?</h3>
+        <h3>Let's Connect</h3>
         <a href="mailto:levona.yim@gmail.com" class="email-btn">
           <span>Say Hello!</span>
           <span class="material-symbols-outlined" style="font-size:18px;">mail</span>
@@ -1505,6 +1535,29 @@
         if (e.key === 'Escape') closeLightbox();
         if (e.key === 'ArrowRight') showNext();
         if (e.key === 'ArrowLeft') showPrev();
+      });
+    });
+
+    // --- BACK TO TOP BUTTON LOGIC ---
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+    function toggleBackToTopBtn() {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('is-visible');
+      } else {
+        backToTopBtn.classList.remove('is-visible');
+      }
+    }
+
+    // Fire once on load
+    toggleBackToTopBtn();
+
+    window.addEventListener('scroll', toggleBackToTopBtn, { passive: true });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
       });
     });
   </script>
