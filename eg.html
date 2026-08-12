@@ -218,6 +218,10 @@
       padding: 0 20px;
     }
 
+    .largerimage img{
+      width: 80% !important;
+    }
+
     /* --- SECTION SHELLS --- */
     .section {
       width: 100%;
@@ -665,6 +669,7 @@
       max-width: calc((100% - 48px) / 3);
       min-width: 240px;
       aspect-ratio: 4 / 3;
+      background-color: #ffffff;
     }
 
     /* --- 4-UP THEN 4-UP GRID LAYOUT --- */
@@ -825,7 +830,7 @@
         --side-pad: clamp(120px, 15vw, 450px);
       }
       .media-full .media-frame img {
-        width: 80%;
+        width: 85%;
         max-height: 900px;
       }
     }
@@ -890,7 +895,7 @@
 
       .section.on-blue {
         background: var(--accent);
-        color: #fff;
+        color: var(--text-main);
         padding-top: 64px;
         padding-bottom: 64px;
       }
@@ -1129,25 +1134,10 @@
     
   </section>
    <!-- MEDIA PHOTOS -->  
-    <div class="media-frame">
+    <div class="media-frame largerimage">
         <img src="eg/day0UF.png" alt="Admin journey map and jobs-to-be-done diagram">
-       <span class="gif-caption">Day 0 flow for the Admin to provision users into the FICO Platform</span>
+       <span class="gif-caption">User flow for Admins to provision users into the FICO Platform</span>
     </div>
-    <div class="media-frame">
-      <img src="eg/OUStructure.png" alt="Discovery workshop in Los Angeles">
-    </div>
-
-    <div class="media-grid less-spacing three-row-grid">
-    <div class="figma-container">
-      <div class="figma-frame">
-        <iframe 
-          src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/board/mm8JMvMaFJYcgseN5fgxot/Day-01-User-Journey-Flows?node-id=1-2&t=QAc0tnpoF4o8LelI-4&hide-ui=1"
-          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
-        </iframe>
-      </div>
-      <span class="gif-caption">BTC Prototype</span>
-    </div>
-  </div>
 
 
   <div class="divider-wrap"><div class="divider"></div></div>
@@ -1172,28 +1162,25 @@
       </div>
     </div>
 
-    <!-- MEDIA GRID: PHASE 2 PHOTOS -->
-    <div class="stack-24">
-      <div class="media-frame"><img src="eg/DAY01MyAtetmpt.png" alt="Low-fidelity wireframe sketches"></div>
-      <div class="media-frame"><img src="https://www.figma.com/api/mcp/asset/a1b3ae34-a43f-4abe-8345-db2fca4b54a6.png" alt="Structured end-to-end flow timeline"></div>
+  <!-- MEDIA GRID: PHASE 2 PHOTOS -->
+  <div class="media-grid less-spacing three-row-grid">
+    <div class="figma-container">
+      <div class="figma-frame">
+        <iframe 
+          src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/board/mm8JMvMaFJYcgseN5fgxot/Day-01-User-Journey-Flows?node-id=1-2&t=QAc0tnpoF4o8LelI-4&hide-ui=1"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+        </iframe>
+      </div>
+      <span class="gif-caption">Different user journeys established for the FICO Admin vs Client Admin</span>
     </div>
-  </section>
+  </div>
+</section>
 
-  
-
-
-  <!-- <div class="media-frame adjust-for-gif">
-    <img src="btc-img/p2/p2-canvas.gif" alt="BTC schema comparison view">
-    <span class="gif-caption">Exploring the Entity Relationship Diagram combined with the table view</span>
+  <div class="media-full" style="padding: 3rem 10rem;">
+    <div class="media-frame"><img src="eg/DAY01MyAtetmpt.png" alt="BTC schema comparison view"></div>
+    <div class="media-frame"><img src="https://www.figma.com/api/mcp/asset/a1b3ae34-a43f-4abe-8345-db2fca4b54a6.png" alt="BTC schema comparison view"></div>
   </div>
 
-  <div class="media-grid less-spacing two-by-two-grid">
-    <div class="media-frame"><img src="btc-img/p2/P2-BTC-Table.png" alt="BTC Phase 2 Table View"></div>
-    <div class="media-frame"><img src="btc-img/p2/P2-BTC-Table2.png" alt="BTC Phase 2 Graphical View Default"></div>
-    <div class="media-frame"><img src="btc-img/p2/P2-BTC-Graph2.png" alt="BTC Phase 2 Graphical View Features"></div>
-    <div class="media-frame"><img src="btc-img/p2/P2-BTC-Graph3.png" alt="BTC Phase 2 Graphical View Details of Entity"></div>
-  </div>
- -->
   <div class="divider-wrap"><div class="divider"></div></div>
 
   <!-- PROCESS: PHASE 3 -->
@@ -1300,7 +1287,7 @@
           style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
         </iframe>
       </div>
-      <span class="gif-caption">BTC Prototype</span>
+      
     </div>
   </div>
 
@@ -1309,36 +1296,37 @@
   <!-- CLOSING DOUBLE IMAGES -->
   <div class="media-full" style="padding-top: 80px;">
     <div class="media-frame">
-      <img src="btc-img/fullimg-mytake/BTC 1.png" alt="BTC schema comparison view">
-    </div>
-    <div class="media-frame">
-      <img src="btc-img/fullimg-mytake/BTC 2.png" alt="BTC schema comparison view">
+      <span class="phase-title">Variation of Final Landing Page Designs</span>
     </div>
   </div>
+
   <div class="media-full">
     <div class="media-frame">
-      <img src="btc-img/fullimg-mytake/BTC 8.png" alt="BTC schema comparison view">
+      <img src="eg/BA-1.png" alt="Business Analyst V1 Landing page">
     </div>
     <div class="media-frame">
-      <img src="btc-img/fullimg-mytake/BTC 6.png" alt="BTC schema comparison view">
+      <img src="eg/BA-2.png" alt="Business Analyst V2 Landing page">
     </div>
   </div>
+
   <div class="media-full">
     <div class="media-frame">
-      <img src="btc-img/fullimg-mytake/BTC 7.png" alt="BTC schema comparison view">
+      <img src="eg/Service-Creator-1.png" alt="Service Creator V1 Landing page">
     </div>
     <div class="media-frame">
-      <img src="btc-img/fullimg-mytake/BTC 3.png" alt="BTC schema comparison view">
+      <img src="eg/Service-Creator-2.png" alt="Service Creator V2 Landing page">
     </div>
   </div>
+
   <div class="media-full" style="padding-bottom: 80px;">
     <div class="media-frame">
-      <img src="btc-img/fullimg-mytake/BTC 5.png" alt="BTC schema comparison view">
+      <img src="eg/Admin-Landing.jpg" alt="Admin V2 Landing page">
     </div>
     <div class="media-frame">
-      <img src="btc-img/fullimg-mytake/BTC 4.png" alt="BTC schema comparison view">
+      <img src="eg/Landing-page-Admin.png" alt="Admin V1 Landing page">
     </div>
   </div>
+
 
   <!-- FOOTER: MORE OF MY WORK & GET IN TOUCH -->
   <footer class="footer-section">
