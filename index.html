@@ -40,6 +40,24 @@
     overflow: hidden;
   }
 
+  /* --- PREVENT IMAGE DRAGGING & RIGHT-CLICK SAVE --- */
+  img {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none; /* Disables long-press context menu on iOS */
+  }
+
+  /* Forces right-clicks on portfolio media frames to hit the container instead of the image */
+  .media-frame img,
+  .card-media img,
+  .card-image-wrapper img {
+    pointer-events: none;
+  }
+
   /* --- NAVIGATION --- */
   nav {
     position: fixed;
@@ -570,7 +588,7 @@
       <!-- Project 3 right-->
       <a href="platform.html" class="project-card">
         <div class="card-image-wrapper">
-          <img src="platform-landingpage1.png" alt="FICO Platform Cover">
+          <img src="platform/platform-landingpage1.png" alt="FICO Platform Cover">
         </div>
         <div class="card-info">
           <div class="card-header-row">

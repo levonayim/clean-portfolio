@@ -35,6 +35,24 @@
       overflow-x: hidden;
     }
 
+    /* --- PREVENT IMAGE DRAGGING & RIGHT-CLICK SAVE --- */
+    img {
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -webkit-touch-callout: none; /* Disables long-press context menu on iOS */
+    }
+
+/* Forces right-clicks on portfolio media frames to hit the container instead of the image */
+.media-frame img,
+.card-media img,
+.card-image-wrapper img {
+  pointer-events: none;
+}
+
     /* --- NAVIGATION (shared with site) --- */
     nav {
       position: fixed;
@@ -152,6 +170,7 @@
     .btc-hero .media-frame {
       width: 100%;
       max-height: 90vh;
+      cursor: default;
     }
     .btc-hero img { max-height: 90vh; }
 
@@ -1360,6 +1379,25 @@
       });
     });
 
+    // Disable right-click context menu on all images and media containers
+    document.addEventListener('contextmenu', (event) => {
+      const isImageTarget = event.target.tagName === 'IMG' || 
+                            event.target.closest('.media-frame') || 
+                            event.target.closest('.card-media') || 
+                            event.target.closest('.card-image-wrapper');
+
+      if (isImageTarget) {
+        event.preventDefault();
+      }
+    });
+
+    // Prevent drag-to-save action on all images
+    document.addEventListener('dragstart', (event) => {
+      if (event.target.tagName === 'IMG') {
+        event.preventDefault();
+      }
+    });
+
     // --- LIGHTBOX INTERACTIVITY FOR ALL MEDIA-FRAME IMAGES ON THE PAGE ---
     document.addEventListener('DOMContentLoaded', () => {
       const modal = document.getElementById('lightboxModal');
@@ -1368,7 +1406,8 @@
       const prevBtn = document.getElementById('lightboxPrev');
       const nextBtn = document.getElementById('lightboxNext');
 
-      const gridFrames = Array.from(document.querySelectorAll('.media-frame')).filter(frame => frame.querySelector('img'));
+      const gridFrames = Array.from(document.querySelectorAll('.media-frame'))
+          .filter(frame => frame.querySelector('img') && !frame.closest('.btc-hero'));
       const images = gridFrames.map(frame => frame.querySelector('img'));
 
       let currentIndex = 0;
