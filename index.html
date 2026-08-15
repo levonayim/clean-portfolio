@@ -139,9 +139,9 @@
     transition: transform 0.1s ease-out;
     margin: 0 auto;
     text-align: center;
-    width: auto;
-    white-space: nowrap;
-  }
+    width: fit-content;
+    max-width: 100%;
+    }
 
   .main-text {
     position: relative;
@@ -186,7 +186,7 @@
 
   @keyframes typing {
     from { max-width: 0; }
-    to { max-width: 100%; }
+    to { max-width: 10ch; }
   }
 
   @keyframes blink {
