@@ -127,7 +127,9 @@
   /* --- CENTERED HERO TITLE & TYPING CURSOR --- */
   .interactive-title {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     font-size: clamp(2.4rem, 11vw, 5rem);
     font-weight: 900;
     color: #15521F;
@@ -137,8 +139,7 @@
     transition: transform 0.1s ease-out;
     margin: 0 auto;
     text-align: center;
-    width: fit-content;
-    max-width: 100%;
+    width: auto;
     white-space: nowrap;
   }
 
@@ -146,6 +147,7 @@
     position: relative;
     z-index: 10;
     display: inline-flex;
+    color: #15521F;
     transform: translateZ(0px);
   }
 
@@ -165,6 +167,7 @@
     -webkit-text-stroke: 1.5px #15521F;
     pointer-events: none;
     transition: transform 0.1s ease-out;
+    white-space: nowrap;
   }
 
   .l-1 { transform: translate3d(calc(var(--mx, 0) * -8px), calc(var(--my, 0) * -8px), -12px); opacity: 0.8; }
@@ -173,11 +176,9 @@
   .l-4 { transform: translate3d(calc(var(--mx, 0) * -32px), calc(var(--my, 0) * -32px), -48px); opacity: 0.2; }
 
   .interactive-title.is-typing {
-    white-space: nowrap;
     overflow: hidden;
     border-right: 4px solid #15521F;
     margin: 0 auto;
-    max-width: 0;
     animation: 
       typing 1.2s steps(10, end) forwards,
       blink 0.6s step-end infinite;
@@ -393,11 +394,9 @@
       max-height: none;
       object-fit: cover;
     }
-    /* Footer Mobile Stack */
-
-      .footer-section {
-        padding: 60px 20px 100px 20px;
-      }
+    .footer-section {
+      padding: 60px 20px 100px 20px;
+    }
   }
 
   @media (max-width: 480px) {
@@ -450,7 +449,7 @@
     }
   }
 
-/* --- FOOTER: MORE WORK & CONTACT --- */
+  /* --- FOOTER: MORE WORK & CONTACT --- */
   .footer-section {
     background-color: var(--bg-soft-2);
     border-top: 1px solid #e0e0e0;
@@ -502,24 +501,24 @@
     font-weight: 600;
     font-size: 1rem;
     transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-    }
+  }
 
-    .email-btn:hover {
-      background-color: var(--green);
-      color: #ffffff;
-      transform: translateY(-2px);
-    }
+  .email-btn:hover {
+    background-color: var(--green);
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
 
   @media (min-width: 1600px) {
-      :root {
-        --side-pad: clamp(120px, 15vw, 450px);
-      }
-      .media-full .media-frame img {
-        width: 80%;
-        max-height: 900px;
-      }
+    :root {
+      --side-pad: clamp(120px, 15vw, 450px);
     }
-</style>
+    .media-full .media-frame img {
+      width: 80%;
+      max-height: 900px;
+    }
+  }
+  </style>
 </head>
 <body>
 
@@ -573,7 +572,6 @@
       <!-- Project 2 left -->
       <a href="eg.html" class="project-card">
         <div class="card-image-wrapper">
-          <!-- <img src="macbookair-new-eg-dark-middle.png" alt="FICO Business Terms Display Laptop"> -->
           <img src="aug10-EGMBA-dark.png" alt="FICO Onboarding Cover">
         </div>
         <div class="card-info">
@@ -654,7 +652,7 @@
     </div>
   </section>
 
-<!-- FOOTER: MORE OF MY WORK & GET IN TOUCH -->
+  <!-- FOOTER: MORE OF MY WORK & GET IN TOUCH -->
   <footer class="footer-section">
     <div class="footer-inner">
       <div class="contact-cta">
@@ -712,9 +710,12 @@
       return span;
     });
 
+    // Remove typing animation restrictions after complete execution
     setTimeout(() => {
       titleContainer.classList.remove('is-typing');
-    }, 1200);
+      titleContainer.style.maxWidth = 'none';
+      titleContainer.style.overflow = 'visible';
+    }, 1250);
 
     document.addEventListener('mousemove', (e) => {
       const { innerWidth, innerHeight } = window;
@@ -775,8 +776,6 @@
 
 
     // --- 4. PAGE TRANSITION NAV HANDLER ---
-    // Covers both the top nav links and the project cards, so clicking
-    // through to any project page uses the same green sweep transition.
     const transitionLinks = document.querySelectorAll('.nav-link, .project-card');
     const overlay = document.getElementById('overlay');
 
@@ -784,8 +783,6 @@
       link.addEventListener('click', (e) => {
         const targetUrl = link.getAttribute('href');
 
-        // Skip in-page anchors and placeholder "#" links (no destination yet)
-        // and any link with a modifier key or opened in a new tab.
         if (!targetUrl || targetUrl === '#' || targetUrl.startsWith('#')) return;
         if (e.metaKey || e.ctrlKey || e.shiftKey || link.target === '_blank') return;
 
@@ -932,9 +929,8 @@
 
     animateFlowers();
 
-    // Automatically highlight active nav link based on current page URL
     document.addEventListener('DOMContentLoaded', () => {
-      const currentPath = window.location.pathname.split('/').pop() || 'new-me.html';
+      const currentPath = window.location.pathname.split('/').pop() || 'index.html';
       const navLinks = document.querySelectorAll('nav a');
 
       navLinks.forEach(link => {
