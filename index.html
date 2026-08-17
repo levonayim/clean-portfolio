@@ -21,6 +21,7 @@
 
   :root {
     --green: #15521F;
+    --green-lighter:#508500;
     --accent: #0251FD;
     --bg-soft: #f5f5f5;
     --bg-soft-2: #f7f7f7;
@@ -83,6 +84,10 @@
     letter-spacing: 1px;
     transition: color 0.2s ease, font-weight 0.2s ease;
   }
+
+  nav a:hover{
+      color: var(--green-lighter);
+    }
 
   /* ACTIVE PAGE LINK STYLE */
   nav a.active {
