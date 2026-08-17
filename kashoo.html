@@ -213,6 +213,9 @@
     .media-frame:hover img {
       transform: scale(1.02);
     }
+    .two-column-img img {
+      width: 100%;
+    }
     .media-frame.img-missing {
       cursor: default;
     }
@@ -336,7 +339,7 @@
 
     /* --- BODY TEXT --- */
     .body-copy {
-      font-size: 1.35rem;
+      font-size: 1.1rem;
       line-height: 1.35;
       font-weight: 300;
       color: #000;
@@ -360,13 +363,13 @@
       padding-left: 24px;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 1.25rem;
       font-size: 1.35rem;
       line-height: 1.25;
       color: #000;
     }
     .on-blue ul.styled, .on-blue ol.styled { color: #fff; }
-    ul.styled li .li-body, ol.styled li .li-body { font-weight: 200; }
+    ul.styled li .li-body, ol.styled li .li-body { font-weight: 200; font-size: 1rem;}
 
     /* --- OVERVIEW / CONTRIBUTION --- */
     .stack-8 { display: flex; flex-direction: column; gap: 8px; }
@@ -557,7 +560,15 @@
     /* --- FULL-WIDTH MEDIA CONTAINER (ORIGINAL DESKTOP SPEC) --- */
     .media-full {
       padding: 1rem 0;
-      background: var(--bg-soft);
+      /*background: var(--bg-soft);*/
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .media-full-frame img {
+      width: 100%;
+      padding: 2rem 1rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -565,6 +576,20 @@
 
     .first-double-image {
       background: rgba(99, 149, 428, 0.1) !important;
+    }
+
+    .img-uj {
+      background: var(--bg-blue-soft);
+      width: 100%;
+    }
+
+    .img-uj img{
+      transform: scale(0.85);
+      transition: none;
+    }
+
+    .img-uj .media-frame:hover img {
+      transform: scale(0.85);
     }
 
     .media-full .media-frame {
@@ -626,6 +651,117 @@
       height: 100%;
       object-fit: contain;
       display: block;
+    }
+
+    /* --- ALWAYS-2-COLUMNS: locks a two-by-two-grid to exactly 2 per row on any screen size --- */
+    .two-by-two-grid.always-2col .media-frame {
+      flex: 1 1 calc(50% - 12px);
+      max-width: calc(50% - 12px);
+      min-width: 320px;
+    }
+
+    @media (max-width: 700px) {
+      .two-by-two-grid.always-2col .media-frame {
+        flex: 1 1 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+    }
+
+    /* --- IMAGE CAROUSEL --- */
+    .carousel {
+      position: relative;
+      padding: var(--side-pad);
+    }
+
+    .carousel-track {
+      position: relative;
+      width: 100%;
+    }
+
+    .carousel-track .media-frame {
+      display: none;
+      width: 100%;
+      min-width: 0;
+      aspect-ratio: 2 / 1;
+      background-color: #F5F5F5;
+      max-height: calc(100vw * 0.35 - 6rem);
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .carousel-track .media-frame.is-active {
+      display: flex;
+    }
+
+    .carousel-track .media-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--text-main);
+      cursor: pointer;
+      z-index: 2;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .carousel-arrow:hover {
+      background: #f0f0f0;
+    }
+
+    .carousel-prev { left: 16px; }
+    .carousel-next { right: 16px; }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .carousel-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      border: none;
+      background: #d9d9d9;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .carousel-dot.is-active {
+      background: var(--accent);
+      transform: scale(1.15);
+    }
+
+    @media (max-width: 768px) {
+      .carousel-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+      }
+      .carousel-prev { left: 8px; }
+      .carousel-next { right: 8px; }
     }
 
     /* --- 3-UP THEN 2-UP GRID LAYOUT --- */
@@ -830,6 +966,14 @@
       .figma-frame {
         height: 520px;
       }
+
+      .media-full-frame img {
+        width:100%;
+        padding: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
 
     /* --- MOBILE BREAKPOINT (< 768px) --- */
@@ -869,6 +1013,32 @@
         color: #fff;
         padding-top: 64px;
         padding-bottom: 64px;
+      }
+
+      .kashoo-new-section{
+        padding: 48px 20px !important;
+      }
+      .kashoo-new-row{
+        flex-direction: column;
+        align-items: flex-start;
+        min-height: 0;
+        gap: 24px;
+      }
+      .kashoo-new-text{
+        flex: 1 1 auto;
+        max-width: 100%;
+      }
+      .kashoo-new-media{
+        align-self: stretch;
+        justify-content: center;
+        width: 100%;
+      }
+      .kashoo-new-media img{
+        height: auto;
+        width: 100%;
+        max-height: none;
+        object-fit: contain;
+        margin-right: 0 !important;
       }
 
       .less-spacing, .adjust-for-gif {
@@ -1073,8 +1243,8 @@
       flex-shrink:0;
     }
     .swatch-legend{
-      display:flex;
-      flex-wrap:wrap;
+      display:grid;
+      grid-template-columns:1fr 1fr;
       gap:16px 40px;
       margin-top:8px;
     }
@@ -1101,6 +1271,87 @@
     }
     .split-row .split-text{ flex:1 1 320px; }
     .split-row .split-media{ flex:1 1 320px; }
+    .split-row-wide-media .split-text{ flex:1 1 260px; max-width:340px; }
+    .split-row-wide-media .split-media{ flex:2 1 420px; }
+
+    /* --- SELF-HOSTED VIDEO (e.g. Inline Editing) --- */
+    .split-media video{
+      display:block;
+      width:100%;
+      height:auto;
+      border-radius:10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+    .stacked-video{
+      display:block;
+      width:100%;
+      height:auto;
+      border-radius:10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    /* --- CLICKABLE VIDEO LINK (opens mp4 in new tab) --- */
+    .video-link{
+      display:block;
+      position:relative;
+      cursor:pointer;
+      border-radius:10px;
+    }
+    .video-link video{ pointer-events:none; }
+    .video-link::after{
+      content:"⤢";
+      position:absolute;
+      top:12px;
+      right:12px;
+      width:32px;
+      height:32px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.55);
+      color:#fff;
+      font-size:1rem;
+      border-radius:50%;
+      opacity:0;
+      transition:opacity 0.2s ease;
+    }
+    .video-link:hover::after{ opacity:1; }
+
+    /* --- KASHOO 2.0 HERO: TEXT + FULL-HEIGHT IMAGE --- */
+    .kashoo-new-section{
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      padding-right: 0 !important;
+      overflow: hidden;
+    }
+    .kashoo-new-row{
+      display:flex;
+      align-items:center;
+      min-height: 560px;
+      gap: 40px;
+    }
+    .kashoo-new-text{
+      flex: 0 1 460px;
+      max-width: 460px;
+      flex-shrink: 0;
+    }
+    .kashoo-new-media{
+      flex: 1 1 auto;
+      align-self: stretch;
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      overflow:hidden;
+      min-width: 0;
+    }
+    .kashoo-new-media img{
+      height: 100%;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      display:block;
+      margin-right: 0 !important;
+    }
 
     /* --- TWO COLUMN BULLET LISTS (Overall Issues, etc.) --- */
     .two-col-list{
@@ -1126,8 +1377,8 @@
 
   <!-- HERO IMAGE -->
   <section class="btc-hero">
-    <div class="media-frame" data-label="[Insert hero image — Kashoo 2.0 laptop mockup on blue background]">
-      <img src="kashoo-img/kashoo-hero.png" alt="Kashoo 2.0 Web cover">
+    <div class="media-frame">
+      <img src="macbookair-kashoo.png" alt="Kashoo 2.0 Web cover">
     </div>
   </section>
 
@@ -1141,90 +1392,134 @@
       <div class="btc-meta">
         <div class="meta-col">
           <span class="meta-label">Timeline</span>
-          <span class="meta-value">Mar 2019 – May 2021</span>
+          <span class="meta-value">2019 – 2021</span>
         </div>
         <div class="meta-col">
           <span class="meta-label">Role</span>
           <span class="meta-value">Lead UX Designer</span>
         </div>
         <div class="meta-col">
-          <span class="meta-label">Tools</span>
+          <span class="meta-label">Team</span>
           <div class="meta-value">
-            <p>Sketch, Figma, HTML/CSS</p>
-            <p>GitHub, JIRA/Confluence</p>
+            <p>Product Manager</p>
+            <p>3 full-stack engineers</p>
+            <p>CEO</p>
           </div>
         </div>
       </div>
 
       <div class="tldr-box">
         <span class="tldr-label">TL;DR</span>
-        <p>
-          Contractors, freelancers, and digital professionals make up a large segment of truly small businesses — and they need bookkeeping tools built for their scale, not scaled-down versions of tools built for medium-sized businesses. As the <span class="highlight">UX Lead of Kashoo 2.0</span>, I designed an experience that is simultaneously simple and intuitive, yet powerful. I collaborated closely with the development team and project manager to launch the project in Nov 2019, and continued refining it based on user feedback through new feature releases.
-        </p>
+        <p> <strong>Kashoo</strong>'s original product, Kashoo Classic, was built for accountants and had grown outdated and hard to navigate for first-time users. User feedback pointed to a confusing, cluttered interface, accountant-only features, unclear bank connections, and a high risk of input errors. Since small business owners (unlike medium-sized businesses) needed a simpler, more tailored tool, Kashoo set out to build <a href="https://www.kashoo.com" target="_blank" class="inner-links">Kashoo 2.0</a>, a more intuitive experience designed for non-experts managing their own finances.</p>
+        <p>As the UX Lead, I designed an experience that is simultaneously simple and intuitive, yet powerful. I collaborated closely with the development team and project manager to successfully launch Kashoo 2.0 in Nov 2019, with continued refining it based on user feedback through new feature releases.</p>
       </div>
     </div>
   </section>
 
-  <!-- THE PROBLEM -->
-  <section class="section on-navy roomiest">
-    <div class="section-inner stack-16">
-      <span class="eyebrow">The Problem</span>
-      <p style="font-size:1.35rem; line-height:1.5; font-weight:300;">The average small business owner spends 6.8 hours a week on their finances — and even then, they may not be using the correct tool for them. Small businesses often need different resources and tools than their medium-sized business counterparts to succeed. It's not a one-size-fits-all solution.</p>
+  <!-- FULL DOUBLE IMAGE -->
+  <div class="media-full first-double-image">
+    <div class="media-frame">
+      <img src="kashoo/kashoo-doubleimages.png" alt="kashoo double images">
+    </div>
+  </div>
+
+  <!-- OVERVIEW + MY CONTRIBUTION -->
+  <section class="section roomy">
+    <div class="section-inner stack-56">
+      <div class="stack-16">
+        <span class="eyebrow" style="color:#000;">overview</span>
+        <div class="body-copy">
+          <p><strong>Kashoo</strong> is a cloud-based accounting and bookkeeping software specifically built for small business owners, freelancers, and sole proprietors who want to manage their finances without needing an extensive accounting background.</p>
+
+          <p>The platform simplifies daily financial management by offering features such as automated bank feeds, receipt scanning, online invoicing, and straightforward expense tracking, allowing users to easily monitor cash flow and generate essential financial reports from any device.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="stack-16">
+        <span class="eyebrow" style="color:#000;">my contribution</span>
+        <div class="body-copy">
+          <p>As the UX Lead, I strove to design an experience that is simultaneously simple and intuitive, yet powerful. I collaborated closely with the development team and project manager to launch the project in Nov 2019 and have gone through continuous refinements from user feedback and designing new features to be released.</p>
+        </div>
+      </div>
     </div>
   </section>
+
+  <!-- IMPACT -->
+  <section class="section on-blue roomiest">
+    <div class="section-inner" style="max-width: var(--wide-w);">
+      <div class="stack-24">
+      <span class="eyebrow">impact</span>
+        <div class="impact-grid">
+          <div class="impact-item">
+            <h3>Spearheaded Kashoo 2.0 UX Strategy</h3>
+            <p>Modernized a complex legacy accounting system into an intuitive, powerful web platform for freelancers and sole proprietors.</p>
+          </div>
+          <div class="impact-item">
+            <h3>Optimized Information Architecture & Workflows</h3>
+            <p>Redesigned core interaction models like the Inbox and data tables to reduce clutter and streamline daily bookkeeping.</p>
+          </div>
+          <div class="impact-item">
+            <h3>Improved Onboarding & Engagement Metrics</h3>
+            <p>Redesigned onboarding and empty states to drive bank account connections, resulting in users being <strong>4x more likely to subscribe.</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-wrap">
+    <div class="divider"></div>
+  </div>
+  <div class="backstory-title">
+    <h3>the backstory</h3>
+  </div>
+
+  <!-- PROBLEM -->
+    <div class="section-inner stack-16">
+      <span class="eyebrow" style="color:#000;">problem</span>
+      <div class="body-copy">
+        <p>The average small business owner spends 6.8 hours a week on their finances — and even then, they may not be using the correct tool for them. Small businesses often need different resources and tools than their medium-sized business counterparts to succeed. It's not a one-size-fits-all solution.</p>
+      </div>
+    </div>
 
   <!-- BACKGROUND: KASHOO CLASSIC -->
-  <section class="section roomy">
+  <section class="section" style="padding-top:4rem; padding-bottom:0;">
     <div class="section-inner stack-16">
-      <span class="eyebrow" style="color:#000;">Background</span>
-      <h3 class="heading-red">Kashoo Classic</h3>
-      <div class="body-copy">
-        <p>Until late 2019, Kashoo had one product, Kashoo Classic. Although it's a great tool for accountants working with small to medium-sized businesses, the product is more than nine years old and needed revamping, as it's not an easy interface to navigate for a first-time user.</p>
+      <span class="eyebrow" style="color:#000;">background</span>
+      <span class="phase-title">Kashoo Classic</span>
+      <div class="stack-48">
+        <div class="body-copy">
+          <p>Until late 2019, Kashoo had one product, Kashoo Classic. Although it's a great tool for accountants working with small to medium-sized businesses, the product is more than nine years old and needed revamping, as it's not an easy interface to navigate for a first-time user.</p>
+        </div>
       </div>
-      <div class="media-frame" data-label="[Insert: Kashoo Classic interface screenshot]">
-        <img src="kashoo-img/kashoo-classic.png" alt="Kashoo Classic interface">
+
+      <div class="media-full">
+        <div class="media-frame" data-label="[Insert: Kashoo 2.0 Web user flow diagram — Screens / User interaction / System legend]">
+          <img src="kashoo/kashoo-classic-main.png" alt="Kashoo 2.0 Web user flow">
+        </div>
       </div>
+
+
     </div>
   </section>
 
   <!-- USER FEEDBACK -->
   <section class="section roomy">
     <div class="section-inner stack-24">
-      <span class="eyebrow" style="color:#000;">User Feedback</span>
-      <h3 class="heading-red">Feedback from Existing Users on Kashoo Classic</h3>
+      <h3 class="phase-title">Feedback from Existing Users on Kashoo Classic</h3>
       <div class="body-copy">
-        <p>Prior to my joining, the team had been gathering feedback from existing users through Intercom, surveys, and cancellation forms on how to build a new and improved Kashoo 2.0 to better serve truly small business owners. Here are a few comments for improvements for a new version of Kashoo.</p>
+        <p>Prior to my joining, the team had been gathering feedback from existing users through Intercom, surveys, and cancellation forms on how to build a new and improved Kashoo 2.0 to better serve truly small business owners.</p> 
+        <p>Below are a few comments for improvements for a new version of Kashoo:</p>
       </div>
 
-      <div class="testimonial-grid">
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"This system may be simple for you, but there is actually a lot to learn as users."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"I recommend Kashoo to people all the time... the only hesitation I sense from people mention it to ask me why they should choose it over Quickbooks Online, which is priced similarly and has the same or more features."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"We switched to Quickbooks, we needed much more in the way of reports and accessing information, this note applies to both of our accounts. The inability to see specific charges by account within a project when clicking on that charge was very frustrating. The report options were silly, and lacked some basic reports needed for business. We needed much more functionality. Quickbooks offers so much more. Sorry."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"I much prefer the old high contrast mode. I've switched to the lighter one because light text on dark background is so hard on my eyes, it's really hard to look at."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"I wanted something that was easy to just track the transactions, categorize them, as well as potentially create Pro Forma statements for me based off my data. The main reason why I didn't like Kashoo was because data was not disclosed in real-time!"</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"The site needs more color... expenses need to be different from income. Some short cuts up top in the blue area, perhaps where you can choose your own short cuts for sections that you always go to. A quick pay button, where you can choose your favorite account... Right now it takes 5 clicks to do so, if you want to quick pay a few things without going to the check printing section, you are stuck clicking away."</p>
-        </div>
+      <div class="media-full-frame">
+      <img src="kashoo/userfeedback-classic.png" alt="BTC schema comparison view">
       </div>
 
       <div class="stack-16" style="margin-top:24px;">
-        <h4 style="font-weight:700;">Overall Issues – Kashoo Classic</h4>
+        <h3 class="phase-title">Overall Issues – Kashoo Classic</h3>
         <div class="two-col-list">
           <ul class="styled">
             <li><span class="li-body">When the user first enters into the software there is no sense of where to start.</span></li>
@@ -1235,24 +1530,27 @@
           <ul class="styled">
             <li><span class="li-body">Too much flexibility. Unless the user knows what they're doing is correct, it could affect what they submit to the CRA/IRS.</span></li>
             <li><span class="li-body">All pages look alike making it confusing to the user, making it easy to accidentally input the wrong type of data into the system.</span></li>
-            <li><span class="li-body">Where to connect bank isn't clear.</span></li>
-            <li><span class="li-body">Problem because users who connect to the bank tend to convert to paid subscribers more than those who don't.</span></li>
-          </ul>
+            <li><span class="li-body">Users didn't know where to connect their bank</span>
+              <p style="font-size: 0.85rem; text-decoration: italic;"><strong>**Major issue because users who connect to the bank tend to convert to paid subscribers more than those who don't.</strong></p>
+            </li>
+            </ul>
         </div>
       </div>
     </div>
   </section>
 
   <!-- THE NEW KASHOO 2.0 -->
-  <section class="section on-soft-blue roomiest">
-    <div class="section-inner stack-16">
-      <span class="eyebrow" style="color:#000;">The New</span>
-      <h2 style="color:#0251FD;">Kashoo 2.0</h2>
-      <div class="body-copy">
-        <p>Automating redundant bookkeeping tasks for small business owners to help them focus on running their business.</p>
+  <section class="section on-soft-blue kashoo-new-section">
+    <div class="kashoo-new-row">
+      <div class="kashoo-new-text stack-16">
+        <span class="eyebrow" style="color:#000;">THE NEW</span>
+        <h2 style="color:#0251FD; display: inline-block;">Kashoo 2.0</h2>
+        <div class="body-copy">
+          <p>Automating redundant bookkeeping tasks for small business owners to help them focus on running their business.</p>
+        </div>
       </div>
-      <div class="media-frame" data-label="[Insert: Kashoo 2.0 laptop mockup]">
-        <img src="kashoo-img/kashoo2-laptop.png" alt="Kashoo 2.0 laptop mockup">
+      <div class="kashoo-new-media media-frame">
+        <img src="kashoo/Kashoo-Solution-2.png" alt="Kashoo 2.0 laptop mockup">
       </div>
     </div>
   </section>
@@ -1260,7 +1558,6 @@
   <!-- CONTEXT -->
   <section class="section roomy">
     <div class="section-inner stack-16">
-      <span class="eyebrow" style="color:#000;">Context</span>
       <h3 class="heading-red">What's special about Kashoo 2.0?</h3>
       <div class="body-copy">
         <p>Using machine learning, Kashoo categorizes and matches recorded expenses with bank and credit card transactions, and provides accurate, complete, and real-time reports in one click. Kashoo also provides OCR and receipt-matching — the user simply attaches an image of a receipt in the Inbox and the system automatically matches it to a transaction. By using Kashoo 2.0, it reduces the amount of mistakes made and the amount of time needed dealing with finances.</p>
@@ -1268,36 +1565,52 @@
     </div>
   </section>
 
+  <div class="divider-wrap"><div class="divider"></div></div>
+
   <section class="section tight">
     <div class="section-inner stack-16">
-      <h3 style="font-weight:700;">Early Concept</h3>
+      <span class="eyebrow" style="color:#000;">Process</span>
+      <h3 style="font-weight:700;">Phase 1: Early Concepting</h3>
       <div class="body-copy">
         <p>Prior to my start with Kashoo, an external design agency was hired to take on Kashoo 2.0 visually and experience-wise.</p>
       </div>
-      <div class="media-frame" data-label="[Insert: Early Kashoo 2.0 concept dashboard from external agency, with carousel dots]">
-        <img src="kashoo-img/early-concept.png" alt="Early Kashoo 2.0 concept">
+    </div>
+  </section>
+    <div class="carousel less-spacing" data-carousel>
+      <div class="carousel-track">
+        <div class="media-frame is-active"><img src="kashoo/Dashboard-old.png" alt="Old design - Dashboard"></div>
+        <div class="media-frame"><img src="kashoo/Inbox-expense-old.png" alt="Old design - Inbox expenses"></div>
+        <div class="media-frame"><img src="kashoo/Modal-old.png" alt="Old design - Modal"></div>
+        <div class="media-frame"><img src="kashoo/contacts-old.png" alt="Old design - Contacts"></div>
+        <div class="media-frame"><img src="kashoo/alerts-old.png" alt="Old design - Alerts"></div>
+        <div class="media-frame"><img src="kashoo/cancel-doesnt-work-also-dont-know-what-this-is-for.png" alt="Cancel btn doesnt work"></div>
+        <div class="media-frame"><img src="kashoo/error-msg-not-helpful-to-user.png" alt="Error message not helpful to user"></div>
+        <div class="media-frame"><img src="kashoo/Transactions-old.png" alt="Old design - Transations"></div>
+        <div class="media-frame"><img src="kashoo/Inbox-empty-old.png" alt="Old design - Inbox empty"></div>
+        <div class="media-frame"><img src="kashoo/old-kashoo2sections.png" alt="Old design - Kashoo in sections"></div>
       </div>
+      <button type="button" class="carousel-arrow carousel-prev" aria-label="Previous slide">&lsaquo;</button>
+      <button type="button" class="carousel-arrow carousel-next" aria-label="Next slide">&rsaquo;</button>
+      <div class="carousel-dots"></div>
+    </div>
 
-      <div class="stack-16">
+  <section class="section tight">
+      <div class="section-inner stack-16">
         <h4 style="font-weight:700;">Few Issues I noticed:</h4>
         <div class="two-col-list">
           <ul class="styled">
             <li><span class="li-body">When the user first enters into the software there is no sense of where to start.</span></li>
             <li><span class="li-body">Too much shown on each page. Hard to focus.</span></li>
-          </ul>
-          <ul class="styled">
-            <li><span class="li-body">Some features that only accountants understand but a regular user may not. Ex. Taxes</span></li>
-            <li><span class="li-body">Targeted towards accountants only, so small business owners with little knowledge of accounting wouldn't find the software intuitive to navigate through.</span></li>
+            <li><span class="li-body">Some teatures that only accountants understand but a regular user may not. Ex. Taxes</span></li>
+            <li><span class="li-body">Targetted towards accountants only so small business owners with little knowledge of accounting wouldn't find the software intuitive to navigate through.</span></li>
           </ul>
         </div>
       </div>
-    </div>
   </section>
 
   <!-- PROCESS: TAKING A STEP BACK -->
   <section class="section on-navy roomy">
     <div class="section-inner stack-24">
-      <span class="eyebrow">Process</span>
       <h3 style="color:#E8998D;">Taking a step back...</h3>
       <div class="body-copy">
         <p>Initially, I was mainly tasked to rework the UI visually to make tweaks of what I thought could improve. However, I took a step back and analyzed the current interface more. I asked myself, "If the interface was better visually, will it solve the main issue? Is the current UI solving the main issue in Kashoo Classic? Will users understand what to do?"</p>
@@ -1309,64 +1622,47 @@
     </div>
   </section>
 
+
   <!-- USER FLOW -->
-  <section class="section roomy">
+  <section class="section" style="padding:40px 0; background-color:#ffffff">
+    <div class="divider-wrap"><div class="divider"></div></div>
     <div class="section-inner stack-16 center-text">
-      <h3 class="heading-red">Kashoo 2.0 Web User Flow</h3>
+      <h3 style="font-weight:700;">Phase 2: Reworking the User Experience</h3>
     </div>
   </section>
-  <div class="media-full">
-    <div class="media-frame" data-label="[Insert: Kashoo 2.0 Web user flow diagram — Screens / User interaction / System legend]">
-      <img src="kashoo-img/user-flow.png" alt="Kashoo 2.0 Web user flow">
-    </div>
-  </div>
+
+  <!-- DISPLAY EACH IMAGE INDIVIDUALLY IN A GRID -->
+      <div class="media-grid less-spacing two-by-two-grid">
+        <div class="media-frame"><img src="kashoo/Untitled_Artwork-2-1.png" alt="Overall User Journey Flow with more complex details of inbox"></div>
+        <div class="media-frame"><img src="kashoo/Untitled_Artwork.png" alt="Overall User Journey Flow"></div>
+        <div class="media-frame"><img src="kashoo/Untitled_Artwork-3.png" alt="User journey when user in Inbox view"></div>
+      </div>
 
   <!-- HIGH LEVEL USER JOURNEY -->
-  <section class="section on-soft-blue roomy">
-    <div class="section-inner" style="max-width: var(--wide-w);">
-      <h3 class="center-text" style="font-weight:700;">High Level User Journey</h3>
-      <div class="journey-timeline">
-        <div class="journey-step">
-          <div class="journey-circle">1</div>
-          <h4>Need</h4>
-          <p>I need a tool to track my finances to make sure they are correct for budgeting and when I have to send it to the CRA/IRS.</p>
-        </div>
-        <div class="journey-step">
-          <div class="journey-circle">2</div>
-          <h4>Discover</h4>
-          <p>I need to find a tool that's cheap and easy to use. I don't want to spend time learning a system I barely use.</p>
-        </div>
-        <div class="journey-step">
-          <div class="journey-circle">3</div>
-          <h4>Upload</h4>
-          <p>I'm able to upload my transactions through bank files, attachments, manually, or connect my bank to import all transactions.</p>
-        </div>
-        <div class="journey-step">
-          <div class="journey-circle">4</div>
-          <h4>Analyze</h4>
-          <p>I can see all the items uploaded in the Inbox are categorized. I can edit the items and post it into my books.</p>
-        </div>
-        <div class="journey-step">
-          <div class="journey-circle">5</div>
-          <h4>Report</h4>
-          <p>All my finalized and categorized items are in one place where I can see whether I owe the CRA or IRS this tax year.</p>
-        </div>
-      </div>
+  <section class="section on-soft-blue tight">
+    <div class="section-inner backstory-title" style="max-width: var(--wide-w);">
+      <h3 class="" style="font-weight:700;">High Level User Journey</h3>
     </div>
-  </section>
+    </section>
+
+      <!-- FULL IMAGE -->
+  <div class="media-full img-uj" style="margin-top:-6rem; padding: 0 6rem;">
+    <div class="media-frame">
+      <img src="kashoo/highlevel-kashoo-transparent.png" alt="High level kashoo transparent">
+    </div>
+  </div>
 
   <!-- WIREFRAMES -->
   <section class="section roomy">
     <div class="section-inner stack-16 center-text">
-      <h3 class="heading-red">Some wireframes of design layouts</h3>
+      <h3 style="font-weight:700;">Variations of design layouts on the Modals</h3>
     </div>
   </section>
-  <div class="media-grid less-spacing">
-    <div class="media-frame" data-label="[Insert: General / Expense wireframes]"><img src="kashoo-img/wf-expense.png" alt="Expense wireframes"></div>
-    <div class="media-frame" data-label="[Insert: Income Refund wireframes]"><img src="kashoo-img/wf-income-refund.png" alt="Income refund wireframes"></div>
-    <div class="media-frame" data-label="[Insert: Income wireframes]"><img src="kashoo-img/wf-income.png" alt="Income wireframes"></div>
-    <div class="media-frame" data-label="[Insert: Expense Refund wireframes]"><img src="kashoo-img/wf-expense-refund.png" alt="Expense refund wireframes"></div>
-    <div class="media-frame" data-label="[Insert: Transfer wireframes]"><img src="kashoo-img/wf-transfer.png" alt="Transfer wireframes"></div>
+  <div class="less-spacing two-by-two-grid always-2col">
+    <div class="media-frame"><img src="kashoo/somewireframesofdesignlayout1.png" alt="Expense wireframes"></div>
+    <div class="media-frame"><img src="kashoo/somewireframesofdesignlayout2.png" alt="Expense wireframes"></div>
+    <div class="media-frame"><img src="kashoo/somewireframesofdesignlayout3.png" alt="Expense wireframes"></div>
+    <div class="media-frame"><img src="kashoo/somewireframesofdesignlayout4.png" alt="Expense wireframes"></div>
   </div>
 
   <div class="divider-wrap"><div class="divider"></div></div>
@@ -1374,81 +1670,74 @@
   <!-- FINAL PRODUCT: BRANDING -->
   <section class="section roomy">
     <div class="section-inner stack-24">
-      <span class="eyebrow" style="color:#000;">Final Product</span>
-      <h3 class="heading-red">Branding</h3>
+      <span class="eyebrow" style="color:#000;">Phase 3: Final Design Decisions</span>
+      <h3 style="font-weight:700;">Brand Refresh</h3>
       <div class="body-copy">
         <p>As the sole designer, the team trusted my judgement and luckily everyone was flexible with me changing the font and adjusting the colours in the interface.</p>
       </div>
 
       <div class="stack-16">
-        <h4 style="font-weight:700;">Colour</h4>
+        <h4 style="font-weight:700; color: var(--accent);margin-top: 1rem;">Colour</h4>
         <div class="body-copy">
           <p>The first thing I noticed in the initial version was that there were multiple different types of blues (~13). The now present UI consists of 1 main dark blue (the same as the one in the logo which was not used in the interface at all), a secondary blue for actions, a couple variations of grays and red for errors. Each colour serves it's own purpose.</p>
         </div>
 
-        <p style="font-weight:700; font-size:0.85rem; letter-spacing:0.5px;">INITIAL COLOURS (BEFORE)</p>
+        <p style="font-weight:700; font-size:0.85rem; letter-spacing:0.5px; margin-top: 1.5rem;">INITIAL COLOURS (BEFORE)</p>
         <div class="swatch-row">
-          <div class="swatch" style="background:#EAF2FF;"></div>
-          <div class="swatch" style="background:#DCE6EF;"></div>
-          <div class="swatch" style="background:#7CA9E0;"></div>
-          <div class="swatch" style="background:#3D82D6;"></div>
-          <div class="swatch" style="background:#1A5FBF;"></div>
-          <div class="swatch" style="background:#0251FD;"></div>
-          <div class="swatch" style="background:#2E8FC7;"></div>
-          <div class="swatch" style="background:#1E9E8E;"></div>
+          <div class="swatch" style="background:#F7FAFC; border:1px solid #ddd;"></div>
+          <div class="swatch" style="background:#EAEFF5;"></div>
+          <div class="swatch" style="background:#4A8FE7;"></div>
+          <div class="swatch" style="background:#1E75D8;"></div>
+          <div class="swatch" style="background:#0F5FC2;"></div>
+          <div class="swatch" style="background:#0C56B2;"></div>
+          <div class="swatch" style="background:#0A52B0;"></div>
+          <div class="swatch" style="background:#146B9E;"></div>
           <div class="swatch" style="background:#2A5DA0;"></div>
-          <div class="swatch" style="background:#1B4A87;"></div>
-          <div class="swatch" style="background:#123566;"></div>
-          <div class="swatch" style="background:#0B2647;"></div>
+          <div class="swatch" style="background:#254B78;"></div>
+          <div class="swatch" style="background:#244B7A;"></div>
+          <div class="swatch" style="background:#254D7D;"></div>
         </div>
         <div class="swatch-row">
-          <div class="swatch" style="background:#D9D9D9;"></div>
-          <div class="swatch" style="background:#BFBFBF;"></div>
-          <div class="swatch" style="background:#8C8C8C;"></div>
-          <div class="swatch" style="background:#A9B4BF;"></div>
-          <div class="swatch" style="background:#3A4A5A;"></div>
-          <div class="swatch" style="background:#D93025;"></div>
-          <div class="swatch" style="background:#F5A623;"></div>
+          <div class="swatch" style="background:#E2E2E2;"></div>
+          <div class="swatch" style="background:#9E9E9E;"></div>
+          <div class="swatch" style="background:#969696;"></div>
+          <div class="swatch" style="background:#98A1AA;"></div>
+          <div class="swatch" style="background:#5E6E7C;"></div>
+          <div class="swatch" style="background:#E60000;"></div>
+          <div class="swatch" style="background:#FFB32C;"></div>
           <div class="swatch" style="background:#FFFFFF; border:1px solid #ddd;"></div>
         </div>
 
-        <p style="font-weight:700; font-size:0.85rem; letter-spacing:0.5px; margin-top:16px;">CONSOLIDATED COLOURS (AFTER)</p>
+        <p style="font-weight:700; font-size:0.85rem; letter-spacing:0.5px; margin-top: 1.5rem;">CONSOLIDATED COLOURS (AFTER)</p>
         <div class="swatch-legend">
-          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#0B2647;"></div> Primary Colour – Titles, editable fields, icons</div>
-          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#D93025;"></div> Errors</div>
-          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#0251FD;"></div> Secondary – Action buttons</div>
-          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#F5A623;"></div> Warning</div>
-          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#EAF2FF;"></div> Highlighting areas, selected item</div>
-          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#3AA76D;"></div> Status good (for bank connections)</div>
-          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#8C8C8C;"></div> Disabled/non-editable text</div>
+          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#0F5EB5;"></div> Primary Colour – Titles, editable fields, icons</div>
+          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#DD3002;"></div> Errors</div>
+          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#4D89DB;"></div> Secondary – Action buttons</div>
+          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#F6B740;"></div> Warning</div>
+          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#F3F7FB; border:1px solid #ddd;"></div> Highlighting areas, selected item</div>
+          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#68A263;"></div> Status good (for bank connections)</div>
+          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#657380;"></div> Disabled/non-editable text</div>
           <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#FFFFFF; border:1px solid #ccc;"></div> Background/Cards</div>
-          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#3A4A5A;"></div> Report texts, descriptions</div>
+          <div class="swatch-legend-item"><div class="swatch-legend-dot" style="background:#333333;"></div> Report texts, descriptions</div>
         </div>
       </div>
 
       <div class="stack-16">
-        <h4 style="font-weight:700;">Font</h4>
+        <h4 style="font-weight:700; color: var(--accent);margin-top: 4rem;">Font</h4>
         <div class="body-copy">
           <p>The initial font of the webapp was Nunito. Although it's a Google webfont, I felt that it didn't make the interface look clean. The slight curve in the lettering made it hard to read when it was bolded like in the sidebar. The logo font and the interface font were also different and I felt the two should be somewhat similar, that's why I chose Proxima Nova. It's more of a straight font, which made the UI more clean and easier to read.</p>
         </div>
-        <div class="split-row">
-          <div class="split-media">
-            <p style="font-weight:700; margin-bottom:8px;">Nunito</p>
-            <div class="media-frame" data-label="[Insert: Sidebar mockup — Nunito font]"><img src="kashoo-img/font-nunito.png" alt="Nunito sidebar"></div>
-          </div>
-          <div class="split-media">
-            <p style="font-weight:700; margin-bottom:8px;">Proxima Nova</p>
-            <div class="media-frame" data-label="[Insert: Sidebar mockup — Proxima Nova font]"><img src="kashoo-img/font-proximanova.png" alt="Proxima Nova sidebar"></div>
-          </div>
+        <div class="media-full" style="justify-content:flex-start;">
+          <img src="kashoo/font-difference.png" alt="Proxima Nova font vs Nunito font" style="width:100%; height:auto; max-width:900px;">
         </div>
       </div>
     </div>
   </section>
 
   <!-- TABLE LAYOUT -->
-  <section class="section roomy">
+  <section class="section">
     <div class="section-inner stack-16">
-      <h3 class="heading-red">Table Layout</h3>
+      <h3 style="font-weight:700;">UI: Tables</h3>
       <div class="body-copy">
         <p>As majority of the webapp consists of tables, I decided to tackle the layouts of the tables (Inbox, Transactions, Contacts, Accounts). For the initial version of Kashoo 2.0, the table layouts were too spaced out. This made the interface look messy and hard to read. There was a lot of unnecessary spaces between columns. In the redesign, I chose to use a 24 column grid system to maximize the horizontal spacing.</p>
       </div>
@@ -1456,39 +1745,72 @@
   </section>
 
   <section class="section on-soft-blue tight">
-    <div class="section-inner stack-16 center-text">
-      <p style="font-weight:700; letter-spacing:0.5px;">INBOX TABLE</p>
+    <div class="section-inner stack-16">
+      <p style="font-weight:700; letter-spacing:0.5px; color: var(--accent);">Inbox</p>
       <p class="body-copy" style="text-align:left;">The initial Inbox layout had too much spacing on sides of columns which made the table hard to read. For the redesign, I chose to use a 24 grid system to utilize the space better. For example, there isn't any extra spacing when the columns are fixed in size such as dates and checkboxes. This gives extra room for descriptions.</p>
-      <div class="media-frame" data-label="[Insert: Redesigned Inbox table, with carousel dots]"><img src="kashoo-img/inbox-table.png" alt="Redesigned Inbox table"></div>
+
+    </div>
+    <!-- IMAGE GALLERY -->
+    <div class="carousel less-spacing" data-carousel>
+      <div class="carousel-track center-text">
+        <div class="media-frame is-active"><img src="kashoo/Mask-Group-1-1.png" alt="Old design - Inbox Variation" style="background-color:var(--bg-blue-soft);"></div>
+        <div class="media-frame"><img src="kashoo/Inbox-grid.png" alt="Inbox grid" style="background-color:var(--bg-blue-soft);"></div>
+        <div class="media-frame"><img src="kashoo/Inbox.png" alt="Inbox old" style="background-color:var(--bg-blue-soft);"></div>
+      </div>
+      <button type="button" class="carousel-arrow carousel-prev" aria-label="Previous slide">&lsaquo;</button>
+      <button type="button" class="carousel-arrow carousel-next" aria-label="Next slide">&rsaquo;</button>
+      <div class="carousel-dots"></div>
     </div>
   </section>
 
   <section class="section on-soft-blue tight">
-    <div class="section-inner stack-16 center-text">
-      <p style="font-weight:700; letter-spacing:0.5px;">TRANSACTION TABLE</p>
+    <div class="section-inner stack-16">
+      <p style="font-weight:700; letter-spacing:0.5px; color: var(--accent);">Transactions</p>
       <p class="body-copy" style="text-align:left;">For the initial Transaction table, it was the same as the Inbox — the old table had too much spacing on columns. The Transaction table has an extra Account column, therefore utilizing the horizontal spacing is important. The new Transaction table uses a 24 column grid like the Inbox with a shorter Description column.</p>
-      <div class="media-frame" data-label="[Insert: Redesigned Transaction table, with carousel dots]"><img src="kashoo-img/transaction-table.png" alt="Redesigned Transaction table"></div>
+    </div>
+    <!-- IMAGE GALLERY -->
+    <div class="carousel less-spacing" data-carousel>
+      <div class="carousel-track">
+        <div class="media-frame is-active"><img src="kashoo/Mask-Group-2-1.png" alt="Old design - Inbox Variation" style="background-color:var(--bg-blue-soft);"></div>
+        <div class="media-frame"><img src="kashoo/Transaction-Grid.png" alt="Inbox grid" style="background-color:var(--bg-blue-soft);"></div>
+        <div class="media-frame"><img src="kashoo/Transactions.png" alt="Inbox old" style="background-color:var(--bg-blue-soft);"></div>
+      </div>
+      <button type="button" class="carousel-arrow carousel-prev" aria-label="Previous slide">&lsaquo;</button>
+      <button type="button" class="carousel-arrow carousel-next" aria-label="Next slide">&rsaquo;</button>
+      <div class="carousel-dots"></div>
     </div>
   </section>
 
   <section class="section on-soft-blue tight">
-    <div class="section-inner stack-16 center-text">
-      <p style="font-weight:700; letter-spacing:0.5px;">CONTACTS/ACCOUNTS TABLE</p>
+    <div class="section-inner stack-16">
+      <p style="font-weight:700; letter-spacing:0.5px; color: var(--accent);">Contacts &amp; Accounts</p>
       <p class="body-copy" style="text-align:left;">For pages such as Accounts and Contacts, there was a submenu to the side. In the redesign, I decided to minimize the width of the submenu more to give room for the tables and used the grid system to better utilize the space.</p>
-      <div class="media-frame" data-label="[Insert: Redesigned Contacts/Accounts table]"><img src="kashoo-img/contacts-table.png" alt="Redesigned Contacts and Accounts table"></div>
+    </div>
+    <!-- IMAGE GALLERY -->
+    <div class="carousel less-spacing" data-carousel>
+      <div class="carousel-track">
+        <div class="media-frame is-active"><img src="kashoo/Mask-Group-3.png" alt="Old design - Inbox Variation" style="background-color:var(--bg-blue-soft);"></div>
+        <div class="media-frame"><img src="kashoo/contacts-table-context.png" alt="Inbox grid" style="background-color:var(--bg-blue-soft);"></div>
+        <div class="media-frame"><img src="kashoo/Contacts-grid.png" alt="Inbox old" style="background-color:var(--bg-blue-soft);"></div>
+        <div class="media-frame"><img src="kashoo/Contacts-table.png" alt="Inbox old" style="background-color:var(--bg-blue-soft);"></div>
+      </div>
+      <button type="button" class="carousel-arrow carousel-prev" aria-label="Previous slide">&lsaquo;</button>
+      <button type="button" class="carousel-arrow carousel-next" aria-label="Next slide">&rsaquo;</button>
+      <div class="carousel-dots"></div>
     </div>
   </section>
 
   <!-- INBOX -->
   <section class="section roomy">
     <div class="section-inner stack-24">
-      <h3 class="heading-red">Inbox</h3>
+      <span class="eyebrow" style="color:#000;">Design Intent</span>
+      <h3 style="font-weight:700;">Inbox</h3>
       <div class="body-copy">
         <p>As the Inbox page is the first impression to users, I needed to make sure that in all scenarios whether a user connects a bank or not, they know what to do without it being overwhelming.</p>
       </div>
 
       <div class="stack-16">
-        <p style="font-weight:700; letter-spacing:0.5px; font-size:0.85rem;">FIRST TIME USERS NO BANK CONNECTED</p>
+        <p style="font-weight:700; letter-spacing:0.5px; font-size:0.85rem; color: var(--accent);margin-top: 4rem;">FIRST TIME USERS WITH NO BANK CONNECTED</p>
         <div class="body-copy">
           <p>We know that not all users tend to connect their banks to the system until they trust the system enough. With Kashoo, users aren't needed to connect their bank to the system, however do recommend users to connect their bank for a quicker and accurate process. Also, from our analytics, we learned that <strong>when a user connects their bank to the system, they are 4 times more likely to subscribe.</strong></p>
           <p>When the user enters into the webapp and no active bank is connected, we've provided a few waypoints to get started:</p>
@@ -1498,52 +1820,70 @@
           <li><span class="li-body">"Categorize your items below" header and a "+ Receipt" button on the mid-left lets the user know their task on the page after an item has been uploaded.</span></li>
           <li><span class="li-body">Top bar — when there's no active bank connected, a message is shown to promote connecting a bank.</span></li>
         </ul>
-        <div class="media-frame" data-label="[Insert: Empty Inbox state, no bank connected]"><img src="kashoo-img/inbox-empty.png" alt="Empty inbox state"></div>
-      </div>
-
-      <div class="split-row">
-        <div class="split-media">
-          <div class="media-frame" data-label="[Insert: Sidebar thumbnail]"><img src="kashoo-img/sidebar-thumb.png" alt="Sidebar thumbnail"></div>
+        <div class="media-full">
+          <div class="media-frame">
+            <img src="kashoo/Screen-Shot-2020-12-29-at-3.00.29-PM.png" alt="Empty Inbox state, no bank connected">
+          </div>
         </div>
-        <div class="split-text stack-16">
-          <p style="font-weight:700; font-size:0.85rem; letter-spacing:0.5px;">INLINE EDITING</p>
-          <p class="body-copy" style="font-size:1.1rem;">Inline editing once there are line items in the table (gray for non-editable, blue for editable).</p>
-        </div>
-      </div>
-
+      <!-- INLINE EDITING -->
       <div class="stack-16">
-        <p style="font-weight:700; font-size:0.85rem; letter-spacing:0.5px;">BULK EDITING</p>
+        <p style="font-weight:700; font-size:0.85rem; letter-spacing:0.5px; color: var(--accent);margin-top: 4rem;">INLINE EDITING</p>
+        <p class="body-copy" style="font-size:1.1rem;">Inline editing once there are line items in the table (gray for non-editable, blue for editable).</p>
+        <a class="video-link" href="kashoo/InlineEditing.mp4" target="_blank" rel="noopener" aria-label="Open Inline Editing video in a new tab">
+          <video class="stacked-video" src="kashoo/InlineEditing.mp4" autoplay loop muted playsinline preload="metadata"></video>
+        </a>
+      </div>
+      <!-- BULK EDITING -->
+      <div class="stack-16">
+        <p style="font-weight:700; font-size:0.85rem; letter-spacing:0.5px; color: var(--accent);margin-top: 4rem;">BULK EDITING</p>
         <p class="body-copy" style="font-size:1.1rem;">When a user selects multiple like items, they can edit the items as a group instead of going to each individual item to make changes.</p>
-        <div class="media-frame" data-label="[Insert: Bulk editing example]"><img src="kashoo-img/bulk-editing.png" alt="Bulk editing"></div>
+        <a class="video-link" href="kashoo/BULK-EDITING.mp4" target="_blank" rel="noopener" aria-label="Open Bulk Editing video in a new tab">
+          <video class="stacked-video" src="kashoo/BULK-EDITING.mp4" autoplay loop muted playsinline preload="metadata"></video>
+        </a>
       </div>
-
+      <!-- SMART SELECTION -->
       <div class="stack-16">
-        <p style="font-weight:700; font-size:0.85rem; letter-spacing:0.5px;">SMART SELECTION</p>
-        <div class="body-copy">
-          <p>Another feature added within the selection tool is depending on the type of item selected, different icons app. We chose to hide the buttons that aren't functionable when selected to minimize confusion. The action icons options are Edit, Post, Delete, Undo.</p>
-          <p>We've included a smart selection in the Inbox table, where users can select all on the page they're currently viewing, all results, only categorized, all uncategorized or unselect all.</p>
+        <p style="font-weight:700; font-size:0.85rem; letter-spacing:0.5px; color: var(--accent);margin-top: 4rem;">SMART SELECTION</p>
+        <div class="split-row">
+          <div class="split-text">
+            <p class="body-copy">Another feature added within the selection tool is depending on the type of item selected, different icons app. We chose to hide the buttons that aren't functionable when selected to minimize confusion. The action icons options are Edit, Post, Delete, Undo.</p>
+          </div>
+          <div class="split-media">
+            <div class="media-frame two-column-img"><img src="kashoo/Screen-Shot-2020-12-29-at-3.37-1.png" alt="Action icons — Edit, Post, Delete, Undo" style="width:100 !important;"></div>
+          </div>
         </div>
         <div class="split-row">
-          <div class="split-media"><div class="media-frame" data-label="[Insert: Action icons — Edit, Post, Delete, Undo]"><img src="kashoo-img/action-icons.png" alt="Action icons"></div></div>
-          <div class="split-media"><div class="media-frame" data-label="[Insert: Smart selection dropdown]"><img src="kashoo-img/smart-selection.png" alt="Smart selection dropdown"></div></div>
+          <div class="split-text">
+            <p class="body-copy">We've included a smart selection in the Inbox table, where users can select all on the page they're currently viewing, all results, only categorized, all uncategorized or unselect all.</p>
+          </div>
+          <div class="split-media">
+            <div class="media-frame"><img src="kashoo/Screen-Shot-2020-12-29-at-3.34-1.png" alt="Smart selection dropdown" style="width:100 !important;"></div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- EDITOR MODALS -->
-  <section class="section roomy">
+  <section class="section">
     <div class="section-inner stack-16">
-      <h3 class="heading-red">Editor Modals</h3>
+      <h3 style="font-weight:700;">Editor Modal</h3>
       <p style="font-weight:700; font-size:0.85rem; letter-spacing:0.5px;">ISSUES WITH THE INITIAL DESIGN</p>
       <div class="body-copy">
         <p>The editor modale was another big task for me to tackle when I first joined the team. Overall, the layout was messy. There wasn't a clear hierarchy in how the information was to be read or filled. Also, changing the type of item it was (expense, income, refund) wasn't noticeable even though there was a dropdown at the top.</p>
       </div>
     </div>
   </section>
-  <div class="divider-wrap"><div class="divider"></div></div>
-  <div class="media-full">
-    <div class="media-frame" data-label="[Insert: Old editor modal UI]"><img src="kashoo-img/editor-old.png" alt="Old editor modal"></div>
+
+  <!-- IMAGE GALLERY -->
+  <div class="carousel less-spacing" data-carousel>
+    <div class="carousel-track">
+      <div class="media-frame is-active"><img src="kashoo/Inbox-expense-old.png" alt="Old design - Dashboard"></div>
+      <div class="media-frame"><img src="kashoo/Modal-old.png" alt="Old design - Inbox expenses"></div>
+    </div>
+    <button type="button" class="carousel-arrow carousel-prev" aria-label="Previous slide">&lsaquo;</button>
+    <button type="button" class="carousel-arrow carousel-next" aria-label="Next slide">&rsaquo;</button>
+    <div class="carousel-dots"></div>
   </div>
 
   <section class="section roomy">
@@ -1556,15 +1896,16 @@
         <ul class="styled">
           <li><span class="li-body">The layout was inspired by the ecommerce checkout layout where everything on the left is the details about the item while the right side is the total calculations.</span></li>
           <li><span class="li-body">Just like the Inbox inline editing, if the input box is gray, they can't change it. If it's blue, it's editable.</span></li>
+          <li><span class="li-body">The types can be changed easily on the top — inspired by Google Calendar in selecting the type of "event" it is.</span></li>
         </ul>
         <ul class="styled">
-          <li><span class="li-body">The types can be changed easily on the top — inspired by Google Calendar in selecting the type of "event" it is.</span></li>
           <li><span class="li-body">For selecting Tax, I chose to phrase it as a question rather having the user try to guess through a +/- sign.</span></li>
+          <li><span class="li-body">When the user has multiple items in a single receipt, this is referred to as "Splitting a transaction" or "Adding a line item." When the user presses the link below, the existing item is formed into an "item" on the right. The user can edit the item by selecting the box itself.</span></li>
         </ul>
       </div>
-      <p class="body-copy">When the user has multiple items in a single receipt, this is referred to as "Splitting a transaction" or "Adding a line item." When the user presses the link below, the existing item is formed into an "item" on the right. The user can edit the item by selecting the box itself.</p>
-      <div class="media-frame" data-label="[Insert: Redesigned editor modal, split view]"><img src="kashoo-img/editor-new.png" alt="Redesigned editor modal"></div>
-
+      <a class="video-link" href="kashoo/my-take-on-redesigning.mp4" target="_blank" rel="noopener" aria-label="Open My Take on Redesigning video in a new tab">
+        <video class="stacked-video" src="kashoo/my-take-on-redesigning.mp4" autoplay loop muted playsinline preload="metadata" style="margin:4rem 0;"></video>
+      </a>
       <p style="font-weight:700; font-size:0.85rem; letter-spacing:0.5px;">FEEDBACK FROM STAFF TESTING</p>
       <div class="body-copy">
         <p>For the first iteration, I had the account on the right (above the total) but from multiple feedback from staff testing and beta users, all first time users wouldn't notice that field. My reasoning for putting it on the right initially was that I thought it would overcrowd the left, but it didn't.</p>
@@ -1573,136 +1914,100 @@
   </section>
 
   <!-- SIDE MENU -->
-  <section class="section roomy">
+  <section class="section">
     <div class="section-inner">
-      <div class="split-row">
+      <h3 style="font-weight:700; padding-bottom: 1.5rem;">Side Menu</h3>
+      <div class="split-row" style="align-items:flex-start;">
         <div class="split-text stack-16">
-          <h3 class="heading-red">Side Menu</h3>
+          
           <p class="body-copy" style="font-size:1.1rem;">In the initial design of the side menu, there was a hamburger menu to the left of the logo that was not noticeable. For the redesign of the interaction, I was inspired by the Confluence button being in the middle of the bar. It's more noticeable to the users if they want to have more horizontal real estate. I also made the decision to use an arrow instead of a hamburger menu as it's more intuitive to the user, as the majority of the current users are a lot older (late 40's to 60's) and may not be used to relating certain icons from their phones to the web.</p>
         </div>
         <div class="split-media">
-          <div class="media-frame" data-label="[Insert: Side menu collapse interaction]"><img src="kashoo-img/side-menu.png" alt="Side menu collapse interaction"></div>
+          <a class="video-link" href="kashoo/SideMenu.mp4" target="_blank" rel="noopener" aria-label="Open Side Menu video in a new tab">
+            <video class="stacked-video" src="kashoo/SideMenu.mp4" autoplay loop muted playsinline preload="metadata"></video>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- DASHBOARD -->
-  <section class="section roomy">
+  <section class="section">
     <div class="section-inner stack-16">
-      <h3 class="heading-red">Dashboard</h3>
+      <h3 style="font-weight:700;">Dashboard</h3>
       <div class="body-copy">
         <p>The main issue with this page was that it wasn't on brand. I also chose colours to be differentiated even for the visually impaired. Initially I thought different colours could be easier but ended up leaning towards shades of blues and purple. This worked the best because the colours wouldn't stand out too much nor would they blend in together.</p>
       </div>
-      <div class="media-frame" data-label="[Insert: Dashboard video/screenshot — income/expenses chart, net income, top expenses, account balances]"><img src="kashoo-img/dashboard.png" alt="Dashboard"></div>
-    </div>
+      <a class="video-link" href="kashoo/Dashboard.mp4" target="_blank" rel="noopener" aria-label="Open Dashboard video in a new tab">
+        <video class="stacked-video" src="kashoo/Dashboard.mp4" autoplay loop muted playsinline preload="metadata" style="margin:4rem 0;"></video>
+      </a>
   </section>
 
   <!-- INVOICES -->
-  <section class="section roomy">
+  <section class="section">
     <div class="section-inner stack-16">
-      <h3 class="heading-red">Invoices</h3>
+      <h3 style="font-weight:700;">Invoices</h3>
       <div class="body-copy">
         <p>For the Invoices and Bills to Pay pages, I initially thought to use the same layout as the main editor modals from the Inbox but after discussing with the team + project manager, we decided it was best to make it slightly different as it needs to consist of a table section listing out all the invoices sent, and it may confuse users of the likeness of the pages (which is a problem in current Kashoo Classic).</p>
       </div>
-      <div class="media-frame" data-label="[Insert: Invoices page video/screenshot]"><img src="kashoo-img/invoices.png" alt="Invoices page"></div>
+      <a class="video-link" href="kashoo/Invoices.mp4" target="_blank" rel="noopener" aria-label="Open Invoices video in a new tab">
+        <video class="stacked-video" src="kashoo/Invoices.mp4" autoplay loop muted playsinline preload="metadata" style="margin:4rem 0;"></video>
+      </a>
     </div>
   </section>
 
   <!-- REPORTS -->
-  <section class="section roomy">
+  <section class="section">
     <div class="section-inner stack-16">
-      <h3 class="heading-red">Reports</h3>
+      <h3 style="font-weight:700;">Reports</h3>
       <div class="body-copy">
         <p>For the reports, this is where I got my hands dirty with code and did the styling for the reports displayed. Also with the new design, there's a better and clearer distinction of which part is the report and which are the interactive elements. There are also some small but very important little details that have been requested by Kashoo Classic users and it's the ability to select ranges like "Current Fiscal Year" or "Last Fiscal Quarter" as these dates can differ depending on each business.</p>
       </div>
-      <div class="media-frame" data-label="[Insert: Profit and Loss report video/screenshot]"><img src="kashoo-img/reports.png" alt="Profit and Loss report"></div>
-    </div>
+      <a class="video-link" href="kashoo/Reports.mp4" target="_blank" rel="noopener" aria-label="Open Reports video in a new tab">
+        <video class="stacked-video" src="kashoo/Reports.mp4" autoplay loop muted playsinline preload="metadata" style="margin:4rem 0;"></video>
+      </a>
   </section>
 
-  <div class="section" style="background:#111; color:#fff; text-align:center; padding: 32px var(--side-pad);">
-    <p style="font-size:0.95rem;">**Please note that there are still a few features that have not been released yet. Therefore I cannot release them to the public until then.</p>
-  </div>
-
   <!-- FEEDBACK ON KASHOO 2.0 -->
-  <section class="section roomy">
-    <div class="section-inner stack-24">
+  <section class="section">
+    <div class="section-inner stack-16">
       <span class="eyebrow" style="color:#000;">User Feedback</span>
-      <h3 class="heading-red">Feedback on Kashoo 2.0</h3>
+      <h3 style="font-weight:700;">Feedback on Kashoo 2.0</h3>
       <div class="body-copy">
         <p>When we first released Kashoo 2.0, majority of the feedback was positive on the UI, however there were some issues regarding missing features like Invoices and Bills to Pay not being implemented yet. There were also technical issues that's out of our capabilities to fix like importing Kashoo Classic businesses to Kashoo 2.0, supporting multi-currencies, and bank connections.</p>
         <p>As we are getting more and more feedback, the team and I are continuously adding new features and improvements for future releases.</p>
       </div>
 
-      <div class="testimonial-grid">
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"I appreciate the effort to make a layer that is simple and accessible, but I was surprised that there was not more access to the underlying structure. Useful for those who don't care about accounting. Impossible for those who do..."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"I know this was supposed to be easy to use, but there is one thing that would be a HUGE improvement. Allowing editing of rules... I was forced to enter the same category over and over."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"I've created a trial account for both versions and I like 2.0 version more because it looks like it is more for the accountants. However, since multi-currency is only in the Classic version I'm not sure if Kashoo will be suitable for us (we prefer something with the UI from 2.0 but with multi-currencies and HTML invoice customization)."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"As mentioned, I do like the overall features and interface a lot, the program uses restrictions that effectively guide clients towards doing more accurate book keeping and keeps them on the right track away from making mistakes."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"As far as I can tell on Kashoo2.0 there is no feature to import a chart of accounts, which is unfortunately a big issue in setting it up agriculture clients as the only option is to manually set up each individual account, and may even end up being a deal breaker for most of these types of clients."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"Software works, but it is not easy to enter data fast, and it does not work on my phone."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"We are a small Community interest Company run totally by volunteers and for us most of the functionality that we need is there. The interface is friendly and fairly easy for someone with dyslexia to use."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"At times trying to find an expense or Invoice in search button if you don't type the name of the business it will not pop up."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"The interface is very simple to use and efficient. Many of the features shown today can quickly be recorded/changed in the program, most unnecessary inputs to change data which can be changed quickly and in bulk, and Kashoo2.0 seems to be built to remove many unnecessary inputs while having controls and safeguards in place that prevent a user from making large mistakes."</p>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">"2.0 looks very nice and I think it has all the functionality I need. I understand that I'll need to make a new account for 2.0 as my 1.0 will not import over. I'm OK with that. Will move in January."</p>
-        </div>
-      </div>
+        <img src="kashoo/Userfeedback-2.0.png" alt="Kashoo 2.0 User Feedback">
+      
     </div>
   </section>
+<!-- FOOTER: MORE OF MY WORK & GET IN TOUCH -->
   <footer class="footer-section">
     <div class="footer-inner">
       <span class="footer-heading">More of my work</span>
       
       <div class="work-grid">
-        <a href="aggregation.html" class="work-card nav-link">
+        <!-- Project 1 Card -->
+        <a href="btc.html" class="work-card nav-link">
           <div class="card-media">
-            <img src="aggregation-img/aggregation-cover.png" alt="FICO Feature Management Aggregation Cover">
+            <img src="BTC-ProDisplay-middlebottom.png" alt="Project 2 Cover">
           </div>
           <div class="work-card-info">
-            <span class="work-card-title">FICO | Feature Management – Aggregation</span>
-            <span class="work-card-subtitle">Simplifying complex data features to be deployed by banking teams in minutes.</span>
+            <span class="work-card-title">FICO | Business Terms Capability</span>
+            <span class="work-card-subtitle">The backbone for building complex, unified data structures.</span>
           </div>
         </a>
-
-        <a href="trulysmall.html" class="work-card nav-link">
+        <!-- Project 2 Card -->  
+        <a href="eg.html" class="work-card nav-link">
           <div class="card-media">
-            <img src="trulysmall-img/ts-cover.png" alt="TrulySmall Invoicing Cover">
+            <img src="aug10-EGMBA-dark.png" alt="Project 1 Cover">
           </div>
           <div class="work-card-info">
-            <span class="work-card-title">TrulySmall Invoicing</span>
-            <span class="work-card-subtitle">Free invoice generator for small businesses, freelancers and startups.</span>
+            <span class="work-card-title">FICO | Experience Gateway (Day 0/1)</span>
+            <span class="work-card-subtitle">A seamless entry point for onboarding, feature exploration, and personalization</span>
           </div>
         </a>
-
       </div>
 
       <div class="contact-cta">
@@ -1872,11 +2177,56 @@
 
     window.addEventListener('scroll', toggleBackToTopBtn, { passive: true });
 
-    backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+    if (backToTopBtn) {
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       });
+    }
+  </script>
+
+  <script>
+    // --- IMAGE CAROUSEL LOGIC (isolated so it can't be blocked by unrelated script errors) ---
+    document.querySelectorAll('[data-carousel]').forEach((carousel) => {
+      const slides = Array.from(carousel.querySelectorAll('.carousel-track .media-frame'));
+      const dotsWrap = carousel.querySelector('.carousel-dots');
+      const prevBtn = carousel.querySelector('.carousel-prev');
+      const nextBtn = carousel.querySelector('.carousel-next');
+      if (!slides.length) return;
+
+      let current = slides.findIndex((slide) => slide.classList.contains('is-active'));
+      if (current === -1) current = 0;
+
+      const dots = slides.map((_, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'carousel-dot';
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        dot.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(dot);
+        return dot;
+      });
+
+      function goTo(index) {
+        slides[current].classList.remove('is-active');
+        dots[current].classList.remove('is-active');
+        current = (index + slides.length) % slides.length;
+        slides[current].classList.add('is-active');
+        dots[current].classList.add('is-active');
+      }
+
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goTo(current - 1);
+      });
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goTo(current + 1);
+      });
+
+      goTo(current);
     });
   </script>
 
