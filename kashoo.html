@@ -2062,6 +2062,12 @@
     const navLinks = document.querySelectorAll('.nav-link');
     const overlay = document.getElementById('overlay');
 
+    // Clear the transition overlay whenever this page is shown,
+    // including when restored from the browser's back/forward cache.
+    window.addEventListener('pageshow', () => {
+      overlay.classList.remove('is-active');
+    });
+
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         const targetUrl = link.getAttribute('href');
