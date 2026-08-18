@@ -399,7 +399,7 @@
     }
 
     ul.styled, ol.styled {
-      padding-left: 32px;
+      padding-left: 4rem;
       padding-top: 24px;
       display: flex;
       flex-direction: column;
@@ -611,7 +611,7 @@
     }
 
     .first-double-image {
-      background-color: #F1FFEF !important;*/
+      background-color: #ECE2FB !important;
     }
 
     .media-full .media-frame {
@@ -1041,10 +1041,9 @@
   <section class="section">
     <div class="section-inner stack-24">
       <span class="project-top">Feature Management — Aggregation</span>
-      <span class="read-time-badge">Estimated: 5-8 min read</span>
+      <span class="read-time-badge">Estimated: 3-5 min read</span>
       <h1 class="btc-title">Simplifying complex data features to be deployed by banking teams in minutes</h1>
-      <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); max-width:560px; margin:0 auto; font-style:italic;">This case study showcases unreleased work for FICO. To respect corporate compliance, proprietary data and business logic have been sanitized; all intellectual property remains the property of the company.</p>
-
+      
       <div class="btc-meta">
         <div class="meta-col">
           <span class="meta-label">Role</span>
@@ -1055,33 +1054,39 @@
           <span class="meta-value">2025</span>
         </div>
         <div class="meta-col">
-          <span class="meta-label">Category</span>
-          <span class="meta-value">Data Analytics</span>
-        </div>
-        <div class="meta-col">
           <span class="meta-label">Team</span>
           <div class="meta-value">
             <p>Product Managers</p>
             <p>Front-End Architect</p>
-            <p>Engineering</p>
+            <p>Engineering Team</p>
           </div>
         </div>
       </div>
 
       <div class="tldr-box">
         <span class="tldr-label">TL;DR</span>
-        <p>Fraud and risk teams depended on data engineers to build features that extract the real-time activity data needed to spot fraud &mdash; a technical process that could take days or weeks. I led and designed the end-to-end experience for FICO's <span class="highlight">Feature Management</span> platform, encompassing its core data transformation (aggregations, expressions), state management (stored values, KPIs), and operational serving (decision stores, hotlists). For the aggregation capability specifically, the UI replaces complex coding scripts with a simple, guided form.</p>
+
+        <p><strong>FICO Feature Management Aggregation </strong> replaces complex coding scripts with a guided UI for banking and risk teams. It simplifies configuring real-time data features and advanced time windows without needing data engineers. This enables non-technical users to deploy critical fraud-detection formulas in seconds instead of weeks.</p>
+        <p>As Lead Product Designer, I designed the end-to-end UI for Aggregation, turning complex data requirements into an intuitive, scalable framework.</p>
       </div>
   </section>
+
+    <!-- FULL DOUBLE IMAGE -->
+  <div class="media-full first-double-image">
+    <div class="media-frame">
+      <img src="eg/EGPortfolio Images - Full Width.png" alt="Experience Gateway dashboard screen">
+    </div>
+  </div>
 
   <!-- OVERVIEW + MY CONTRIBUTION -->
   <section class="section roomy">
     <div class="section-inner stack-56">
       <div class="stack-16">
-        <span class="eyebrow" style="color:#000;">context</span>
+        <span class="eyebrow" style="color:#000;">overview</span>
         <div class="body-copy">
           <p><strong>Feature Management</strong> is a centralized data platform that allows banks to instantly track customer behavior and easily create data formulas to predict risk, stop fraud, and improve customer service in real time.</p>
-          <p>For the aggregation capability specifically, the UI replaces complex coding scripts with a simple form. By separating data setup from mathematical logic, the UI guides analysts step-by-step through configuring advanced time windows &mdash; for example, tracking a specific event over a rolling 30-second window &mdash; in a clear, linear flow.</p>
+          <p>For the aggregation capability specifically, the UI replaces complex coding scripts with a simple form. By separating data setup from mathematical logic, the UI guides analysts step-by-step through configuring advanced time windows in a clear, linear flow.</p>
+          <p><i>For example, tracking a specific event over a rolling 30-second window.</i></p>
         </div>
       </div>
 
@@ -1090,24 +1095,14 @@
       <div class="stack-16">
         <span class="eyebrow" style="color:#000;">my contribution</span>
         <div class="body-copy">
-        <p>I partnered closely with the Feature Management Product Manager, the Front-End Architect, and the engineering team to design the ecosystem's first core capability: Aggregation.</p>
-        <p>I started off by asking the foundational questions:</p>
+        <p>I partnered closely with the Feature Management Product Manager, the Front-End Architect, and the engineering team to design the ecosystem's first core capability: Aggregation.</p> 
       </div>
-      <ul class="styled">
-        <li>Why are we building this?</li>
-        <li>Who are our users? Why do they need this?</li>
-        <li>What workflows are they trying to accomplish?</li>
-      </ul>
-      <div class="body-copy" style="margin-top: 1.5rem;">
-        <p>For this initiative, the collaboration structure was unique. The PM was more hands-on, providing initial conceptual sketches of their vision for the feature management workflow. I took these functional requirements and translated them into an intuitive, scalable user experience.</p>
-      </div>
-    </div>
       </div>
     </div>
   </section>
 
   <!-- IMPACT -->
-  <section class="section on-blue roomiest">
+  <section class="section on-blue roomy">
     <div class="section-inner" style="max-width: var(--wide-w);">
       <div class="stack-24">
       <span class="eyebrow">impact</span>
@@ -1135,7 +1130,7 @@
 </div>
 
   <!-- PROBLEM -->
-  <section class="section">
+  <section class="section tight">
     <div class="section-inner stack-16">
       <span class="eyebrow" style="color:#000;">problem</span>
       <div class="stack-24">
@@ -1147,16 +1142,23 @@
   </section>
 
 <!-- PROCESS: PHASE 1 -->
-  <section class="section roomy">
+  <section class="section tight">
     <div class="section-inner stack-16">
       <span class="eyebrow" style="color:#000;">process</span>
 
       <div class="stack-16">
-        <span class="phase-title">Phase 1 — Early Wireframes &amp; Requirements</span>
+        <span class="phase-title">Early Wireframes &amp; Requirements</span>
 
         <div class="stack-24">
-          <div class="body-copy">
-            <p>The PM provided initial conceptual sketches of their vision for the feature management workflow, along with a requirements table outlining the necessary fields and logic. I took these functional requirements and translated them into an intuitive, scalable user experience.</p>
+            <div class="body-copy" style="margin-top: 1.5rem;">
+              <p>For this initiative, the collaboration structure was unique. The PM was more hands-on, providing initial conceptual sketches of their vision for the feature management workflow. I took these functional requirements and translated them into an intuitive, scalable user experience.</p>
+              <p>I started off by asking the foundational questions:</p>
+            <ul class="styled">
+              <li>Why are we building this?</li>
+              <li>Who are our users? Why do they need this?</li>
+              <li>What workflows are they trying to accomplish?</li>
+            </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -1164,10 +1166,9 @@
   </section>
 
   <!-- MEDIA GRID: PM WIREFRAMES + REQUIREMENTS TABLE -->
-  <div class="media-grid less-spacing three-row-grid">
-    <div class="media-frame"><img src="fm/PM-wireframes.png" alt="PM's initial conceptual wireframes"></div>
-    <div class="media-frame"><img src="fm/PM-wireframes2.png" alt="PM's initial conceptual wireframes, continued"></div>
-    <div class="media-frame"><img src="fm/UI-Table-Req.png" alt="UI requirements table"></div>
+  <div class="media-grid less-spacing two-by-two-grid">
+    <div class="media-frame"><img src="fm/PM-wireframes-scaled.png" alt="PM's initial conceptual wireframes"></div>
+    <div class="media-frame"><img src="fm/PM-wireframes2-scaled.png" alt="PM's initial conceptual wireframes, continued"></div>
   </div>
 
   <section class="section">
@@ -1204,6 +1205,7 @@
   <div class="divider-wrap"><div class="divider"></div></div>
 
   <!-- MEDIA GRID: FINAL DESIGN SCREENS -->
+  <h3 style="text-align:center;">Few Final Design Wireframes</h3>
   <div class="media-grid less-spacing three-row-grid">
     <div class="media-frame"><img src="fm/Aggregations.png" alt="Aggregations landing screen"></div>
     <div class="media-frame"><img src="fm/Window-type-more-than-1-window-to-retain.png" alt="Window type — more than 1 window to retain"></div>
@@ -1212,27 +1214,22 @@
     <div class="media-frame"><img src="fm/Add-Aggregation-1.png" alt="Add Aggregation flow"></div>
     <div class="media-frame"><img src="fm/Aggregations-replace-termset.png" alt="Aggregations, replace termset"></div>
   </div>
-  <span class="gif-caption" style="width:90%; margin-top:24px;">Above: Some of the final designs of Aggregation.</span>
 
-  <div class="divider-wrap"><div class="divider"></div></div>
+  <div class="divider"></div>
 
-  <section class="section tight">
-    <div class="section-inner">
-      <span class="eyebrow" style="color:#000; text-align:center; display:block;">Examples of other capabilities within Feature Management using the same Aggregation framework</span>
+  <!-- FIGMA -->
+  <div class="media-grid less-spacing three-row-grid">
+    <div class="figma-container">
+      <div class="figma-frame">
+        <iframe 
+          src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/UZgDp90Pij0oTZvBH9cmGT/Shared---Levona-Aggregation?node-id=4-300074&viewport=843%2C478%2C0.03&t=rB7mhlkDYmZtLSY4-1&scaling=scale-down-width&content-scaling=fixed&page-id=0%3A1&hide-ui=1"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen>
+        </iframe>
+      </div>
     </div>
-  </section>
-
-  <!-- MEDIA GRID: OTHER CAPABILITIES -->
-  <div class="two-by-two-grid" style="padding: 0 var(--side-pad) 24px var(--side-pad);">
-    <div class="media-frame"><img src="fm/Variation-of-Tables.png" alt="Variation of tables"></div>
-    <div class="media-frame"><img src="fm/Stored-Value-screens.png" alt="Stored Value screens"></div>
-    <div class="media-frame"><img src="fm/Add-Stored-Value.png" alt="Add Stored Value"></div>
-    <div class="media-frame"><img src="fm/Stored-Value-Add-form.png" alt="Stored Value add form"></div>
-    <div class="media-frame"><img src="fm/Aggregation-Overall-Screens.png" alt="Aggregation overall screens"></div>
-    <div class="media-frame"><img src="fm/Hotlist-menus.png" alt="Hotlist menus"></div>
   </div>
   <div style="text-align:center; padding: 0 var(--side-pad) 60px var(--side-pad);">
-    <span class="gif-caption" style="width:90%; margin: 0 auto;">Above: A few of the other Feature Management capabilities that use the same framework as Aggregation.</span>
+    <span class="gif-caption" style="width:90%; margin: 0 auto;">Aggregation flow &amp; A few of the other Feature Management capabilities that use the same framework as Aggregation.</span>
   </div>
 
   <!-- BUTTON TO GO BACK TO TOP -->
